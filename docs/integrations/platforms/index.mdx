@@ -1,0 +1,61 @@
+---
+sidebar_position: 0
+sidebar_class_name: hidden
+---
+
+# 大模型供应商
+
+:::info
+
+如果您想编写自己的集成，请参见 [扩展 LangChain](/docs/how_to/#custom)。
+如果您想贡献一个集成，请参见 [贡献集成](/docs/contributing/integrations/)。
+
+:::
+
+LangChain 与许多大模型供应商集成。
+
+## 集成包
+
+这些大模型供应商有独立的 `langchain-` 包，以改善版本控制、依赖管理和测试。
+
+| 大模型供应商 | 包名 | 下载量 | 最新版本 | [JS](https://js.langchain.com/docs/integrations/platforms/) |
+| :--- | :---: | :---: | :---: | :---: |
+| [Airbyte](/docs/integrations/providers/airbyte/) | [langchain-airbyte](https://python.langchain.com/api_reference/airbyte/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-airbyte?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-airbyte?style=flat-square&label=%20&color=orange) | ❌ |
+| [Anthropic](/docs/integrations/platforms/anthropic/) | [langchain-anthropic](https://python.langchain.com/api_reference/anthropic/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-anthropic?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-anthropic?style=flat-square&label=%20&color=orange) | ✅ |
+| [AstraDB](/docs/integrations/providers/astradb/) | [langchain-astradb](https://python.langchain.com/api_reference/astradb/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-astradb?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-astradb?style=flat-square&label=%20&color=orange) | ❌ |
+| [AWS](/docs/integrations/platforms/aws/) | [langchain-aws](https://python.langchain.com/api_reference/aws/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-aws?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-aws?style=flat-square&label=%20&color=orange) | ✅ |
+| [Azure 动态会话](/docs/integrations/platforms/microsoft/) | [langchain-azure-dynamic-sessions](https://python.langchain.com/api_reference/azure_dynamic_sessions/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-azure-dynamic-sessions?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-azure-dynamic-sessions?style=flat-square&label=%20&color=orange) | ✅ |
+| [Box](/docs/integrations/providers/box/) | [langchain-box](https://python.langchain.com/api_reference/box/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-box?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-box?style=flat-square&label=%20&color=orange) | ❌ |
+| [Chroma](/docs/integrations/providers/chroma/) | [langchain-chroma](https://python.langchain.com/api_reference/chroma/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-chroma?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-chroma?style=flat-square&label=%20&color=orange) | ❌ |
+| [Cohere](/docs/integrations/providers/cohere/) | [langchain-cohere](https://python.langchain.com/api_reference/cohere/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-cohere?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-cohere?style=flat-square&label=%20&color=orange) | ✅ |
+| [Couchbase](/docs/integrations/providers/couchbase/) | [langchain-couchbase](https://python.langchain.com/api_reference/couchbase/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-couchbase?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-couchbase?style=flat-square&label=%20&color=orange) | ❌ |
+| [Databricks](/docs/integrations/providers/databricks/) | [langchain-databricks](https://python.langchain.com/api_reference/databricks/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-databricks?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-databricks?style=flat-square&label=%20&color=orange) | ❌ |
+| [Elasticsearch](/docs/integrations/providers/elasticsearch/) | [langchain-elasticsearch](https://python.langchain.com/api_reference/elasticsearch/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-elasticsearch?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-elasticsearch?style=flat-square&label=%20&color=orange) | ❌ |
+| [Exa](/docs/integrations/providers/exa_search/) | [langchain-exa](https://python.langchain.com/api_reference/exa/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-exa?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-exa?style=flat-square&label=%20&color=orange) | ✅ |
+| [烟花](/docs/integrations/providers/fireworks/) | [langchain-fireworks](https://python.langchain.com/api_reference/fireworks/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-fireworks?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-fireworks?style=flat-square&label=%20&color=orange) | ❌ |
+| [谷歌社区](/docs/integrations/platforms/google/) | [langchain-google-community](https://python.langchain.com/api_reference/google_community/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-google-community?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-google-community?style=flat-square&label=%20&color=orange) | ❌ |
+| [谷歌生成AI](/docs/integrations/platforms/google/) | [langchain-google-genai](https://python.langchain.com/api_reference/google_genai/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-google-genai?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-google-genai?style=flat-square&label=%20&color=orange) | ✅ |
+| [谷歌VertexAI](/docs/integrations/platforms/google/) | [langchain-google-vertexai](https://python.langchain.com/api_reference/google_vertexai/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-google-vertexai?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-google-vertexai?style=flat-square&label=%20&color=orange) | ✅ |
+| [Groq](/docs/integrations/providers/groq/) | [langchain-groq](https://python.langchain.com/api_reference/groq/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-groq?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-groq?style=flat-square&label=%20&color=orange) | ✅ |
+| [Huggingface](/docs/integrations/platforms/huggingface/) | [langchain-huggingface](https://python.langchain.com/api_reference/huggingface/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-huggingface?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-huggingface?style=flat-square&label=%20&color=orange) | ❌ |
+| [Milvus](/docs/integrations/providers/milvus/) | [langchain-milvus](https://python.langchain.com/api_reference/milvus/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-milvus?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-milvus?style=flat-square&label=%20&color=orange) | ❌ |
+| [MistralAI](/docs/integrations/providers/mistralai/) | [langchain-mistralai](https://python.langchain.com/api_reference/mistralai/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-mistralai?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-mistralai?style=flat-square&label=%20&color=orange) | ✅ |
+| [MongoDB](/docs/integrations/providers/mongodb_atlas/) | [langchain-mongodb](https://python.langchain.com/api_reference/mongodb/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-mongodb?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-mongodb?style=flat-square&label=%20&color=orange) | ✅ |
+| [Nomic](/docs/integrations/providers/nomic/) | [langchain-nomic](https://python.langchain.com/api_reference/nomic/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-nomic?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-nomic?style=flat-square&label=%20&color=orange) | ✅ |
+| [Nvidia AI 端点](/docs/integrations/providers/nvidia/) | [langchain-nvidia-ai-endpoints](https://python.langchain.com/api_reference/nvidia_ai_endpoints/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-nvidia-ai-endpoints?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-nvidia-ai-endpoints?style=flat-square&label=%20&color=orange) | ❌ |
+| [Ollama](/docs/integrations/providers/ollama/) | [langchain-ollama](https://python.langchain.com/api_reference/ollama/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-ollama?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-ollama?style=flat-square&label=%20&color=orange) | ✅ |
+| [OpenAI](/docs/integrations/platforms/openai/) | [langchain-openai](https://python.langchain.com/api_reference/openai/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-openai?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-openai?style=flat-square&label=%20&color=orange) | ✅ |
+| [Pinecone](/docs/integrations/providers/pinecone/) | [langchain-pinecone](https://python.langchain.com/api_reference/pinecone/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-pinecone?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-pinecone?style=flat-square&label=%20&color=orange) | ✅ |
+| Postgres | [langchain-postgres](https://python.langchain.com/api_reference/postgres/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-postgres?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-postgres?style=flat-square&label=%20&color=orange) | ❌ |
+| Prompty | [langchain-prompty](https://python.langchain.com/api_reference/prompty/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-prompty?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-prompty?style=flat-square&label=%20&color=orange) | ❌ |
+| [Qdrant](/docs/integrations/providers/qdrant/) | [langchain-qdrant](https://python.langchain.com/api_reference/qdrant/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-qdrant?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-qdrant?style=flat-square&label=%20&color=orange) | ✅ |
+| [Redis](/docs/integrations/providers/redis/) | [langchain-redis](https://python.langchain.com/api_reference/redis/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-redis?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-redis?style=flat-square&label=%20&color=orange) | ✅ |
+| [Unstructured](/docs/integrations/providers/unstructured/) | [langchain-unstructured](https://python.langchain.com/api_reference/unstructured/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-unstructured?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-unstructured?style=flat-square&label=%20&color=orange) | ❌ |
+| [Upstage](/docs/integrations/providers/upstage/) | [langchain-upstage](https://python.langchain.com/api_reference/upstage/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-upstage?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-upstage?style=flat-square&label=%20&color=orange) | ❌ |
+| [VoyageAI](/docs/integrations/providers/voyageai/) | [langchain-voyageai](https://python.langchain.com/api_reference/voyageai/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-voyageai?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-voyageai?style=flat-square&label=%20&color=orange) | ❌ |
+| [Weaviate](/docs/integrations/providers/weaviate/) | [langchain-weaviate](https://python.langchain.com/api_reference/weaviate/) | ![PyPI - 下载量](https://img.shields.io/pypi/dm/langchain-weaviate?style=flat-square&label=%20&color=blue) | ![PyPI - 版本](https://img.shields.io/pypi/v/langchain-weaviate?style=flat-square&label=%20&color=orange) | ✅ |
+
+## 所有大模型供应商
+
+点击 [这里](/docs/integrations/providers/) 查看所有大模型供应商。
+

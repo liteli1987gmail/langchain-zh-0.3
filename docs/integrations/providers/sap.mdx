@@ -1,0 +1,25 @@
+# SAP
+
+> [SAP SE(Wikipedia)](https://www.sap.com/about/company.html) 是一家德国跨国公司
+> 软件公司。它开发企业软件以管理业务运营和
+> 客户关系。该公司是全球领先的
+> `企业资源规划 (ERP)` 软件供应商。
+
+## 安装和设置
+
+我们需要安装 `hdbcli` python 包。
+
+```bash
+pip install hdbcli
+```
+
+## 向量存储
+
+>[SAP HANA Cloud 向量引擎](https://www.sap.com/events/teched/news-guide/ai.html#article8) 是
+> 一个完全集成到 `SAP HANA Cloud` 数据库中的向量存储。
+
+查看 [使用示例](/docs/integrations/vectorstores/sap_hanavector)。
+
+```python
+from langchain_community.vectorstores.hanavector import HanaDB
+```

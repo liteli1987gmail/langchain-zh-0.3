@@ -1,0 +1,33 @@
+# Rockset
+
+>[Rockset](https://rockset.com/product/) 是一个实时分析数据库服务，旨在以低延迟和高并发处理大规模分析查询。它在结构化和半结构化数据上构建了一个融合索引™，并为向量嵌入提供了高效的存储。它对无模式数据运行 SQL 的支持使其成为使用元数据过滤进行向量搜索的完美选择。
+
+## 安装和设置
+
+确保您拥有 Rockset 账户，并前往网络控制台获取 API 密钥。详细信息可以在 [网站](https://rockset.com/docs/rest-api/) 上找到。
+
+```bash
+pip install rockset
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/rockset)。
+
+```python
+from langchain_community.vectorstores import Rockset 
+```
+
+## 文档加载器
+
+查看 [使用示例](/docs/integrations/document_loaders/rockset)。
+```python
+from langchain_community.document_loaders import RocksetLoader
+```
+
+## 聊天消息历史
+
+查看 [使用示例](/docs/integrations/memory/rockset_chat_message_history)。
+```python
+from langchain_community.chat_message_histories import RocksetChatMessageHistory
+```

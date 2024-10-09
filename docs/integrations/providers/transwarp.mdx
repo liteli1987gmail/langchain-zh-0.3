@@ -1,0 +1,34 @@
+# Transwarp
+
+> [Transwarp](https://www.transwarp.cn/en/introduction) 旨在构建
+> 企业级大数据和人工智能基础设施软件，
+> 以塑造数据世界的未来。它为企业提供
+> 围绕整个数据生命周期的基础设施软件和服务，
+> 包括集成、存储、治理、建模、分析，
+> 挖掘和流通。
+>
+> `Transwarp` 专注于技术研究和
+> 开发，并在这些方面积累了核心技术：
+> 分布式计算，SQL 编译，数据库技术，
+> 多模型数据管理的统一，基于容器的云计算，
+> 以及大数据分析和智能。
+
+## 安装
+
+您需要安装几个 Python 包：
+
+```bash
+pip install -U tiktoken hippo-api
+```
+
+并获取连接配置。
+
+## 向量存储
+
+### Hippo
+
+请参见 [使用示例和安装说明](/docs/integrations/vectorstores/hippo)。
+
+```python
+from langchain_community.vectorstores.hippo import Hippo
+```

@@ -1,0 +1,110 @@
+# Cassandra
+
+> [Apache Cassandra®](https://cassandra.apache.org/) 是一个NoSQL、行导向、高度可扩展和高度可用的数据库。
+> 从版本5.0开始，数据库附带了[向量搜索功能](https://cassandra.apache.org/doc/trunk/cassandra/vector-search/overview.html)。
+
+本页面概述的集成可以与`Cassandra`以及其他CQL兼容的数据库一起使用，
+即使用`Cassandra查询语言`协议的数据库。
+
+
+## 安装和设置
+
+安装以下Python包：
+
+```bash
+pip install "cassio>=0.1.6"
+```
+
+## 向量存储
+
+```python
+from langchain_community.vectorstores import Cassandra
+```
+
+在[示例笔记本](/docs/integrations/vectorstores/cassandra)中了解更多。
+
+## 聊天消息历史
+
+```python
+from langchain_community.chat_message_histories import CassandraChatMessageHistory
+```
+
+在[示例笔记本](/docs/integrations/memory/cassandra_chat_message_history)中了解更多。
+
+
+## 大型语言模型缓存
+
+```python
+from langchain.globals import set_llm_cache
+from langchain_community.cache import CassandraCache
+set_llm_cache(CassandraCache())
+```
+
+在[示例笔记本](/docs/integrations/llm_caching#cassandra-caches)中了解更多（滚动到Cassandra部分）。
+
+
+## 语义大型语言模型缓存
+
+```python
+from langchain.globals import set_llm_cache
+from langchain_community.cache import CassandraSemanticCache
+set_llm_cache(CassandraSemanticCache(
+    embedding=my_embedding,
+    table_name="my_store",
+))
+```
+
+在[示例笔记本](/docs/integrations/llm_caching#cassandra-caches)中了解更多（滚动到适当部分）。
+
+## 文档加载器
+
+```python
+from langchain_community.document_loaders import CassandraLoader
+```
+
+在[示例笔记本](/docs/integrations/document_loaders/cassandra)中了解更多。
+
+#### 版权声明
+
+> Apache Cassandra、Cassandra 和 Apache 是在美国和/或其他国家的注册商标或商标。
+> [Apache 软件基金会](http://www.apache.org/)。
+
+## 工具包
+
+`Cassandra 数据库工具包`使 AI 工程师能够高效地将代理与 Cassandra 数据集成。
+。
+
+```python
+from langchain_community.agent_toolkits.cassandra_database.toolkit import (
+    CassandraDatabaseToolkit,
+)
+```
+
+在 [示例笔记本](/docs/integrations/tools/cassandra_database) 中了解更多信息。
+
+
+Cassandra 数据库单个工具：
+
+### 获取模式
+
+用于获取 Apache Cassandra 数据库中键空间模式的工具。
+
+```python
+from langchain_community.tools import GetSchemaCassandraDatabaseTool
+```
+
+### 获取表格数据
+
+用于从Apache Cassandra数据库中的表格获取数据的工具。
+
+```python
+from langchain_community.tools import GetTableDataCassandraDatabaseTool
+```
+
+### 查询
+
+用于使用提供的CQL查询Apache Cassandra数据库的工具。
+
+```python
+from langchain_community.tools import QueryCassandraDatabaseTool
+```

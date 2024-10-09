@@ -1,0 +1,93 @@
+# Facebook - Meta
+
+>[Meta Platforms, Inc.](https://www.facebook.com/)，以`Meta`名义经营，曾名为
+> `Facebook, Inc.`和`TheFacebook, Inc.`，是一家美国跨国科技
+> 企业。该公司拥有并运营`Facebook`、`Instagram`、`Threads`，
+> 和`WhatsApp`等其他产品和服务。
+ 
+## 嵌入模型
+
+### LASER
+
+>[LASER](https://github.com/facebookresearch/LASER)是由
+> `Meta AI Research`团队开发的Python库，用于
+> 创建多语言句子嵌入。
+> [截至2024年2月25日支持超过147种语言](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)
+
+```bash
+pip install laser_encoders
+```
+
+查看[使用示例](/docs/integrations/text_embedding/laser)。
+
+```python
+from langchain_community.embeddings.laser import LaserEmbeddings
+```
+
+## 文档加载器
+
+### Facebook Messenger
+
+> [Messenger](https://en.wikipedia.org/wiki/Messenger_(software)) 是一款即时通讯应用程序，
+> 由`Meta Platforms`开发。最初在2008年作为`Facebook Chat`开发，该公司在2010年对其
+> 消息服务进行了改版。
+
+查看[使用示例](/docs/integrations/document_loaders/facebook_chat)。
+
+```python
+from langchain_community.document_loaders import FacebookChatLoader
+```
+
+## 向量存储
+
+### Facebook Faiss
+
+> [Facebook AI 相似性搜索 (Faiss)](https://engineering.fb.com/2017/03/29/data-infrastructure/faiss-a-library-for-efficient-similarity-search/)
+> 是一个用于高效相似性搜索和密集向量聚类的库。它包含算法，
+> 可以在任何大小的向量集合中进行搜索，甚至可以处理可能不适合RAM的向量。它还包含支持
+> 评估和参数调优的代码。
+
+[Faiss文档](https://faiss.ai/)。
+
+我们需要安装 `faiss` python 包。
+
+```bash
+pip install faiss-gpu # For CUDA 7.5+ supported GPU's.
+```
+
+或
+
+```bash
+pip install faiss-cpu # For CPU Installation
+```
+
+查看[使用示例](/docs/integrations/vectorstores/faiss)。
+
+```python
+from langchain_community.vectorstores import FAISS
+```
+
+## 聊天加载器
+
+### Facebook Messenger
+
+> [Messenger](https://en.wikipedia.org/wiki/Messenger_(software)) 是一个即时消息应用程序和
+> 由 `Meta Platforms` 开发的平台。最初于2008年作为 `Facebook Chat` 开发，该公司在
+> 2010年对其消息服务进行了改版。
+
+查看 [使用示例](/docs/integrations/chat_loaders/facebook)。
+
+```python
+from langchain_community.chat_loaders.facebook_messenger import (
+    FolderFacebookMessengerChatLoader,
+    SingleFileFacebookMessengerChatLoader,
+)
+```
+
+### Facebook WhatsApp
+
+查看 [使用示例](/docs/integrations/chat_loaders/whatsapp)。
+
+```python
+from langchain_community.chat_loaders.whatsapp import WhatsAppChatLoader
+```

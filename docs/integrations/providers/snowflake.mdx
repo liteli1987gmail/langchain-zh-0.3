@@ -1,0 +1,32 @@
+# 雪花
+
+> [雪花](https://www.snowflake.com/) 是一个基于云的数据仓库平台
+> 允许您存储和查询大量数据。
+
+本页面介绍如何在 `LangChain` 中使用 `Snowflake` 生态系统。
+
+## 嵌入模型
+
+雪花免费提供他们的开放权重 `arctic` 系列嵌入模型
+在 [Hugging Face](https://huggingface.co/Snowflake/snowflake-arctic-embed-m-v1.5)。最新的模型，snowflake-arctic-embed-m-v1.5 特性 [套娃嵌入](https://arxiv.org/abs/2205.13147)，可以有效地进行向量截断。
+您可以通过以下方式使用这些模型
+[HuggingFaceEmbeddings](/docs/integrations/text_embedding/huggingfacehub) 连接器：
+
+```shell
+pip install langchain-community sentence-transformers
+```
+
+```python
+from langchain_huggingface import HuggingFaceEmbeddings
+
+model = HuggingFaceEmbeddings(model_name="snowflake/arctic-embed-m-v1.5")
+```
+
+## 文档加载器
+
+您可以使用 [`SnowflakeLoader`](/docs/integrations/document_loaders/snowflake)
+从 Snowflake 加载数据：
+
+```python
+from langchain_community.document_loaders import SnowflakeLoader
+```

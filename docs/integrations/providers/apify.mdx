@@ -1,0 +1,41 @@
+# Apify
+
+
+>[Apify](https://apify.com) 是一个用于网络爬虫和数据提取的云平台，
+>它提供了一个包含超过一千个的[生态系统](https://apify.com/store)，
+>这些现成的应用程序被称为 *Actors*，用于各种爬取、抓取和提取的用例。
+
+[![Apify Actors](/img/ApifyActors.png)](https://apify.com/store)
+
+此集成使您能够在 `Apify` 平台上运行 Actors，并将其结果加载到 LangChain 中，以便为您的向量
+索引提供来自网络的文档和数据，例如从具有文档的网页生成答案，
+博客或知识库。
+
+
+## 安装和设置
+
+- 使用 `pip install apify-client` 安装 Apify API 客户端（Python）
+- 获取您的 [Apify API 令牌](https://console.apify.com/account/integrations)，并将其设置为
+环境变量 (`APIFY_API_TOKEN`)，或在构造函数中将其作为 `apify_api_token` 传递给 `ApifyWrapper`。
+
+
+## 工具
+
+您可以使用 `ApifyWrapper` 在 Apify 平台上运行 Actors。
+
+```python
+from langchain_community.utilities import ApifyWrapper
+```
+
+有关此包装器的更多信息，请参见[API参考](https://python.langchain.com/api_reference/community/utilities/langchain_community.utilities.apify.ApifyWrapper.html)。
+
+
+## 文档加载器
+
+您还可以使用我们的`ApifyDatasetLoader`从Apify数据集中获取数据。
+
+```python
+from langchain_community.document_loaders import ApifyDatasetLoader
+```
+
+有关此加载器的更详细操作，请参见[此笔记本](/docs/integrations/document_loaders/apify_dataset)。

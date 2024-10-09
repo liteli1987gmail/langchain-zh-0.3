@@ -1,0 +1,29 @@
+# Runhouse
+
+本页面介绍如何在LangChain中使用[Runhouse](https://github.com/run-house/runhouse)生态系统。
+它分为三个部分：安装和设置、大型语言模型（LLMs）和嵌入模型（Embeddings）。
+
+## 安装和设置
+- 使用`pip install runhouse`安装Python SDK
+- 如果您想使用按需集群，请使用`sky check`检查您的云凭证
+
+## 自托管大型语言模型（LLMs）
+对于基本的自托管大型语言模型，您可以使用`SelfHostedHuggingFaceLLM`类。更多自定义大型语言模型，您可以使用`SelfHostedPipeline`父类。
+自定义大型语言模型，你可以使用 `SelfHostedPipeline` 父类。
+
+```python
+from langchain_community.llms import SelfHostedPipeline, SelfHostedHuggingFaceLLM
+```
+
+有关自托管大型语言模型的更详细指南，请参见 [此笔记本](/docs/integrations/llms/runhouse)
+
+## 自托管嵌入
+有几种方法可以通过 Runhouse 使用自托管嵌入与 LangChain。
+
+要从 Hugging Face Transformers 模型获取基本的自托管嵌入，你可以使用
+`SelfHostedEmbedding` 类。
+```python
+from langchain_community.llms import SelfHostedPipeline, SelfHostedHuggingFaceLLM
+```
+
+有关自托管嵌入的更详细指南，请参见 [此笔记本](/docs/integrations/text_embedding/self-hosted)

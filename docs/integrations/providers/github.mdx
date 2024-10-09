@@ -1,0 +1,45 @@
+# GitHub
+
+> [GitHub](https://github.com/) 是一个开发者平台，允许开发者创建、
+> 存储、管理和分享他们的代码。它使用 `Git` 软件，提供
+> Git 的分布式版本控制以及访问控制、错误跟踪、
+> 软件功能请求、任务管理、持续集成和每个项目的维基。
+ 
+
+## 安装和设置
+
+要访问 GitHub API，您需要一个 [个人访问令牌](https://github.com/settings/tokens)。
+
+
+## 文档加载器
+
+GitHub 提供了两个文档加载器。
+
+查看 [使用示例](/docs/integrations/document_loaders/github)。
+
+```python
+from langchain_community.document_loaders import GitHubIssuesLoader, GithubFileLoader
+```
+
+## 工具/工具包
+
+### GitHub工具包
+该`GitHub`工具包包含使大型语言模型代理能够与
+GitHub 仓库交互的工具。
+
+该工具包是`PyGitHub`库的封装。
+
+```python
+from langchain_community.agent_toolkits.github.toolkit import GitHubToolkit
+```
+
+在[示例笔记本](/docs/integrations/tools/github)中了解更多信息。
+
+### GitHub操作
+
+与GitHub API交互的工具。
+
+```python
+from langchain_community.tools.github.tool import GitHubAction
+```
+

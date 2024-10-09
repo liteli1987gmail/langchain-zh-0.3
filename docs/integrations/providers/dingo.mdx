@@ -1,0 +1,31 @@
+# DingoDB
+
+> [DingoDB](https://github.com/dingodb) 是一个分布式多模态向量数据库。
+> 它结合了数据湖和向量数据库的特点，
+> 允许存储任何类型的数据（键值、PDF、音频、
+> 视频等），无论其大小如何。利用 DingoDB，您可以构建
+> 自己的向量海洋（继数据仓库和数据湖之后的下一代数据架构）。这使得
+> 通过单一的 SQL 实时分析结构化和非结构化数据，
+> 并且延迟极低。
+> 一个在实时中具有极低延迟的独特SQL。
+
+## 安装和设置
+
+安装Python SDK
+
+```bash
+pip install dingodb
+```
+
+## 向量存储
+
+存在一个围绕DingoDB索引的包装器，允许您将其用作向量存储，
+无论是用于语义搜索还是示例选择。
+
+要导入此向量存储：
+
+```python
+from langchain_community.vectorstores import Dingo
+```
+
+有关DingoDB包装器的更详细说明，请参见[此笔记本](/docs/integrations/vectorstores/dingo)

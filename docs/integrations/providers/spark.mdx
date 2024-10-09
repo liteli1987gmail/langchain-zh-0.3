@@ -1,0 +1,49 @@
+# Spark
+
+> [Apache Spark](https://spark.apache.org/) 是一个统一的分析引擎，用于
+> 大规模数据处理。它提供了 Scala、Java、
+> Python 和 R 的高级 API，以及一个支持通用计算的
+> 数据分析图的优化引擎。它还支持一套丰富的高级
+> 工具，包括 `Spark SQL` 用于 SQL 和 DataFrames，`pandas API on Spark`
+> 用于 pandas 工作负载，`MLlib` 用于机器学习，
+> `GraphX` 用于图处理，以及 `Structured Streaming` 用于流式处理。
+
+## 文档加载器
+
+### PySpark
+
+它从 `PySpark` 数据框加载数据。
+
+查看 [使用示例](/docs/integrations/document_loaders/pyspark_dataframe)。
+
+```python
+from langchain_community.document_loaders import PySparkDataFrameLoader
+```
+
+## 工具/工具包
+
+### Spark SQL工具包
+
+与`Spark SQL`交互的工具包。
+
+查看[使用示例](/docs/integrations/tools/spark_sql)。
+
+```python
+from langchain_community.agent_toolkits import SparkSQLToolkit, create_spark_sql_agent
+from langchain_community.utilities.spark_sql import SparkSQL
+```
+
+#### Spark SQL单个工具
+
+您可以使用Spark SQL工具包中的单个工具：
+- `InfoSparkSQLTool`：获取关于Spark SQL的元数据的工具
+- `ListSparkSQLTool`：获取表名的工具
+- `QueryCheckerTool`：使用大型语言模型检查查询是否正确的工具
+- `QuerySparkSQLTool`：用于查询Spark SQL的工具
+
+```python
+from langchain_community.tools.spark_sql.tool import InfoSparkSQLTool
+from langchain_community.tools.spark_sql.tool import ListSparkSQLTool
+from langchain_community.tools.spark_sql.tool import QueryCheckerTool
+from langchain_community.tools.spark_sql.tool import QuerySparkSQLTool
+```

@@ -1,0 +1,25 @@
+# Fauna
+
+> [Fauna](https://fauna.com/) 是一个分布式文档关系数据库
+> 它结合了文档的灵活性和关系型数据库的强大功能，
+> 这是一个符合ACID标准的数据库，能够在不同地区、云或全球范围内扩展。
+ 
+
+## 安装和设置
+
+我们需要获取密钥。
+请参阅详细的 [指南](https://docs.fauna.com/fauna/current/learn/security_model/)。
+
+我们需要安装 `fauna` 包。
+
+```bash
+pip install -U fauna
+```
+
+## 文档加载器
+
+查看[使用示例](/docs/integrations/document_loaders/fauna)。
+
+```python
+from langchain_community.document_loaders.fauna import FaunaLoader
+```

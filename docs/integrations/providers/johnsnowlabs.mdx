@@ -1,0 +1,117 @@
+# Johnsnowlabs
+
+获取访问 [johnsnowlabs](https://www.johnsnowlabs.com/) 企业级 NLP 库的权限
+使用开源 `johnsnowlabs` 库，拥有超过 21,000 个企业级 NLP 模型，支持 200 多种语言。
+有关所有 24,000+ 模型，请参见 [John Snow Labs 模型中心](https://nlp.johnsnowlabs.com/models)
+
+## 安装和设置
+
+
+```bash
+pip install johnsnowlabs
+```
+
+要[安装企业功能](https://nlp.johnsnowlabs.com/docs/en/jsl/install_licensed_quick)，请运行：
+```python
+# for more details see https://nlp.johnsnowlabs.com/docs/en/jsl/install_licensed_quick
+nlp.install()
+```
+
+
+您可以使用基于 `gpu`、`cpu`、`apple_silicon`、`aarch` 的优化二进制文件嵌入您的查询和文档。
+默认使用 cpu 二进制文件。
+一旦会话开始，您必须重新启动笔记本以在 GPU 或 CPU 之间切换，否则更改将不会生效。
+
+## 使用 CPU 嵌入查询：
+```python
+document = "foo bar"
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert')
+output = embedding.embed_query(document)
+```
+
+
+## 使用 GPU 嵌入查询：
+
+
+```python
+document = "foo bar"
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','gpu')
+output = embedding.embed_query(document)
+```
+
+
+
+
+## 使用 Apple Silicon (M1、M2 等) 嵌入查询：
+
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','apple_silicon')
+output = embedding.embed_query(document)
+```
+
+
+
+## 使用 AARCH 嵌入查询：
+
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','aarch')
+output = embedding.embed_query(document)
+```
+
+
+
+
+
+
+## 使用 CPU 嵌入文档：
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','gpu')
+output = embedding.embed_documents(documents)
+```
+
+
+
+## 使用 GPU 嵌入文档：
+
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','gpu')
+output = embedding.embed_documents(documents)
+```
+
+
+
+
+
+## 使用 Apple Silicon (M1, M2 等) 嵌入文档：
+
+```python
+
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','apple_silicon')
+output = embedding.embed_documents(documents)
+```
+
+
+
+## 使用 AARCH 嵌入文档：
+
+```python
+
+```python
+documents = ["foo bar", 'bar foo']
+embedding = JohnSnowLabsEmbeddings('embed_sentence.bert','aarch')
+output = embedding.embed_documents(documents)
+```
+
+
+
+
+模型通过 [nlp.load](https://nlp.johnsnowlabs.com/docs/en/jsl/load_api) 加载，Spark 会话通过 [nlp.start()](https://nlp.johnsnowlabs.com/docs/en/jsl/start-a-sparksession) 在后台启动。
+
+
+

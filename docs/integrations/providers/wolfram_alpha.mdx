@@ -1,0 +1,39 @@
+# Wolfram Alpha
+
+>[WolframAlpha](https://en.wikipedia.org/wiki/WolframAlpha) 是由 `Wolfram Research` 开发的答案引擎。
+> 它通过计算外部来源数据的答案来回答事实查询。
+
+本页面介绍如何在 LangChain 中使用 `Wolfram Alpha API`。
+
+## 安装和设置
+- 安装所需的依赖
+```bash
+pip install wolframalpha
+```
+- 前往 Wolfram Alpha 并在 [这里](https://developer.wolframalpha.com/) 注册开发者账户
+- 创建一个应用并获取你的 `APP ID`
+- 将你的 APP ID 设置为环境变量 `WOLFRAM_ALPHA_APPID`
+
+
+## 包装器
+
+### 工具
+
+存在一个 WolframAlphaAPIWrapper 工具，它封装了这个 API。要导入这个工具：
+
+```python
+from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
+```
+
+有关此包装器的更详细的操作指南，请参见 [这个笔记本](/docs/integrations/tools/wolfram_alpha)。
+
+### 工具
+
+你也可以轻松地将这个包装器加载为一个工具（以便与代理一起使用）。
+你可以通过以下方式做到这一点：
+```python
+from langchain.agents import load_tools
+tools = load_tools(["wolfram-alpha"])
+```
+
+有关工具的更多信息，请参见[此页面](/docs/how_to/tools_builtin)。

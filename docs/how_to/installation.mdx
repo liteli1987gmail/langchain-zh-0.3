@@ -1,0 +1,118 @@
+---
+sidebar_position: 2
+---
+
+# 如何安装 LangChain 包
+
+LangChain 生态系统分为不同的包，允许您精确选择要安装的功能部分。
+功能。
+
+## 官方发布
+
+要安装主要的 `langchain` 包，请运行：
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from "@theme/CodeBlock";
+
+<Tabs>
+  <TabItem value="pip" label="Pip" default>
+    <CodeBlock language="bash">pip install langchain</CodeBlock>
+  </TabItem>
+  <TabItem value="conda" label="Conda">
+    <CodeBlock language="bash">conda install langchain -c conda-forge</CodeBlock>
+  </TabItem>
+</Tabs>
+
+虽然这个包作为使用 LangChain 的合理起点，
+但 LangChain 的大部分价值在于与各种大模型供应商、数据存储等的集成。
+默认情况下，进行这些操作所需的依赖项不会被安装。您需要单独安装特定集成的依赖项，我们将在下面展示。
+
+## 生态系统包
+
+除了 `langsmith` SDK，LangChain 生态系统中的所有包都依赖于 `langchain-core`，它包含其他包使用的基础类和抽象。
+下面的依赖图显示了不同包之间的关系。
+一个有向箭头表示源包依赖于目标包：
+
+![](/img/ecosystem_packages.png)
+
+安装包时，您不需要显式安装该包的显式依赖项（例如 `langchain-core`）。
+但是，如果您使用的功能仅在某个版本的依赖项中可用，您可以选择这样做。
+如果您这样做，您应该确保安装或固定的版本与您使用的任何其他集成包兼容。
+
+### LangChain核心
+`langchain-core` 包包含其余 LangChain 生态系统使用的基础抽象，以及 LangChain 表达式语言。它由 `langchain` 自动安装，但也可以单独使用。安装方法如下：
+
+```bash
+pip install langchain-core
+```
+
+### 集成包
+
+某些集成，如 OpenAI 和 Anthropic，有自己的包。
+任何需要自己包的集成将在 [集成文档](/docs/integrations/platforms/) 中进行说明。
+您可以在 [API 参考](https://api.python.langchain.com) 的 "第三方库" 下拉菜单中查看所有集成包的列表。
+要安装其中一个，请运行：
+
+```bash
+pip install langchain-openai
+```
+
+任何尚未拆分为自己包的集成将保留在 `langchain-community` 包中。安装方法：
+
+```bash
+pip install langchain-community
+```
+
+### LangChain 实验
+`langchain-experimental` 包包含实验性的 LangChain 代码，旨在用于研究和实验用途。
+安装方法：
+
+```bash
+pip install langchain-experimental
+```
+
+### LangGraph
+`langgraph` 是一个用于构建有状态的多参与者应用程序的库，支持大型语言模型（LLMs）。它与 LangChain 无缝集成，但也可以单独使用。
+安装方式：
+
+```bash
+pip install langgraph
+```
+
+### LangServe
+LangServe 帮助开发者将 LangChain 可运行组件和链部署为 REST API。
+LangServe 由 LangChain CLI 自动安装。
+如果不使用 LangChain CLI，请使用以下方式安装：
+
+```bash
+pip install "langserve[all]"
+```
+用于客户端和服务器依赖项。或者使用 `pip install "langserve[client]"` 安装客户端代码，使用 `pip install "langserve[server]"` 安装服务器代码。
+
+### LangChain CLI
+LangChain CLI 对于处理 LangChain 模板和其他 LangServe 项目非常有用。
+安装方式：
+
+```bash
+pip install langchain-cli
+```
+
+### LangSmith SDK
+LangSmith SDK由LangChain自动安装。然而，它并不依赖于
+`langchain-core`，如果需要，可以独立安装和使用。
+如果您不使用LangChain，可以通过以下方式安装：
+
+```bash
+pip install langsmith
+```
+
+### 从源代码安装
+
+如果您想从源代码安装一个包，可以通过克隆[主LangChain仓库](https://github.com/langchain-ai/langchain)，进入您想要安装的包的目录`PATH/TO/REPO/langchain/libs/{package}`，然后运行：
+
+```bash
+pip install -e .
+```
+
+LangGraph、LangSmith SDK和某些集成包位于主LangChain仓库之外。您可以在[这里查看所有仓库](https://github.com/langchain-ai)。

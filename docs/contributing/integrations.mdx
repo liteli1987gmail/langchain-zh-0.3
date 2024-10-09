@@ -1,0 +1,203 @@
+---
+sidebar_position: 5
+---
+
+# 贡献集成
+
+首先，请确保您已按照[贡献代码](/docs/contributing/code/)指南中的说明安装所有依赖项。
+
+您可以在几个不同的地方为LangChain贡献集成：
+
+- **社区**：用于主要由LangChain和开源社区维护的轻量级集成。
+- **第三方库**：用于由LangChain和合作伙伴共同维护的独立库。
+
+在大多数情况下，**新集成应添加到社区包**。第三方库作为独立包需要更多维护，因此在创建新第三方库之前，请与LangChain团队确认。
+
+在接下来的部分中，我们将介绍如何为这些包贡献来自虚构公司`Parrot Link AI`的集成。
+
+## 社区包
+
+`langchain-community`包位于`libs/community`中，包含大多数集成。
+
+可以使用`pip install langchain-community`进行安装，导出的成员可以通过如下代码导入
+
+```python
+from langchain_community.chat_models import ChatParrotLink
+from langchain_community.llms import ParrotLinkLLM
+from langchain_community.vectorstores import ParrotLinkVectorStore
+```
+
+`community` 包依赖于手动安装的依赖包，因此如果您尝试导入未安装的包，将会看到错误。
+在我们的假设示例中，如果您尝试导入 `ParrotLinkLLM` 而没有安装 `parrot-link-sdk`，在尝试使用它时，您将看到一个 `ImportError`，提示您安装它。
+
+假设我们想为 Parrot Link AI 实现一个聊天模型。我们将在 `libs/community/langchain_community/chat_models/parrot_link.py` 中创建一个新文件，内容如下：
+
+```python
+from langchain_core.language_models.chat_models import BaseChatModel
+
+class ChatParrotLink(BaseChatModel):
+    """ChatParrotLink chat model.
+
+    Example:
+        .. code-block:: python
+
+            from langchain_community.chat_models import ChatParrotLink
+
+            model = ChatParrotLink()
+    """
+
+    ...
+```
+
+我们将在以下位置编写测试：
+
+- 单元测试：`libs/community/tests/unit_tests/chat_models/test_parrot_link.py`
+- 集成测试：`libs/community/tests/integration_tests/chat_models/test_parrot_link.py`
+
+并添加文档到：
+
+- `docs/docs/integrations/chat/parrot_link.ipynb`
+
+## LangChain 仓库中的合作伙伴包
+
+:::caution
+在开始一个 **合作伙伴** 包之前，请与 LangChain 团队确认您的意图。合作伙伴包作为单独的包需要更多的维护，因此我们将关闭没有事先讨论的新合作伙伴包的 PR。请参见上面的部分，了解如何添加社区集成。
+:::
+
+第三方库可以托管在 `LangChain` 单一代码库或外部代码库中。
+
+在 `LangChain` 代码库中的第三方库位于 `libs/partners/{partner}`。
+包的源代码在 `libs/partners/{partner}/langchain_{partner}` 中。
+
+一个包是
+用户通过 `pip install langchain-{partner}` 安装的，包的成员
+可以通过如下代码导入：
+
+```python
+from langchain_{partner} import X
+```
+
+### 设置一个新包
+
+要设置一个新的第三方库，请使用最新版本的 LangChain CLI。您可以通过以下方式安装或更新它：
+
+```bash
+pip install -U langchain-cli
+```
+
+假设您想为一家名为 Parrot Link AI 的公司创建一个新的第三方库。
+
+然后，运行以下命令以创建一个新的第三方库：
+
+```bash
+cd libs/partners
+langchain-cli integration new
+> Name: parrot-link
+> Name of integration in PascalCase [ParrotLink]: ParrotLink
+```
+
+这将创建一个新的包在 `libs/partners/parrot-link`，其结构如下：
+
+```
+libs/partners/parrot-link/
+  langchain_parrot_link/ # folder containing your package
+    ...
+  tests/
+    ...
+  docs/ # bootstrapped docs notebooks, must be moved to /docs in monorepo root
+    ...
+  scripts/ # scripts for CI
+    ...
+  LICENSE
+  README.md # fill out with information about your package
+  Makefile # default commands for CI
+  pyproject.toml # package metadata, mostly managed by Poetry
+  poetry.lock # package lockfile, managed by Poetry
+  .gitignore
+```
+
+### 实现你的包
+
+首先，添加你的包所需的任何依赖，例如你公司的SDK：
+
+```bash
+poetry add parrot-link-sdk
+```
+
+如果你需要单独的依赖用于类型检查，可以将它们添加到 `typing` 组中：
+
+```bash
+poetry add --group typing types-parrot-link-sdk
+```
+
+然后，在 `libs/partners/parrot-link/langchain_parrot_link` 中实现你的包。
+
+默认情况下，这将包括聊天模型、LLM 和/或向量存储的存根。你应该删除任何不使用的文件，并从 `__init__.py` 中移除它们。
+
+### 编写单元和集成测试
+
+在 `tests/` 目录中提供了一些基本测试。你应该添加更多测试以覆盖你包的功能。
+
+有关运行和实现测试的信息，请参见 [测试指南](/docs/contributing/testing/)。
+
+### 编写文档
+
+文档是从 `docs/` 目录中的 Jupyter 笔记本生成的。您应该将包含示例的笔记本放置在
+单体库根目录下的相关 `docs/docs/integrations` 目录中。
+
+### （如有必要）弃用社区集成
+
+注意：只有在您将现有的社区集成迁移到
+合作伙伴包时，这才是必要的。如果您集成的组件是全新的 LangChain（即
+不在 `community` 包中），您可以跳过此步骤。
+
+假设我们将我们的 `ChatParrotLink` 聊天模型从社区包迁移到
+合作伙伴包。我们需要在社区包中弃用旧模型。
+
+我们可以通过在旧模型中添加 `@deprecated` 装饰器来实现，如下所示，
+`libs/community/langchain_community/chat_models/parrot_link.py`。
+
+在我们更改之前，我们的聊天模型可能看起来像这样：
+
+```python
+class ChatParrotLink(BaseChatModel):
+  ...
+```
+
+在我们更改之后，它将看起来像这样：
+
+```python
+from langchain_core._api.deprecation import deprecated
+
+@deprecated(
+    since="0.0.<next community version>", 
+    removal="0.2.0", 
+    alternative_import="langchain_parrot_link.ChatParrotLink"
+)
+class ChatParrotLink(BaseChatModel):
+  ...
+```
+
+您应该为每个要迁移到第三方库的组件执行此操作。
+
+### 额外步骤
+
+贡献者步骤：
+
+- [ ] 在 `.github/workflows/_integration_test.yml` 中添加手动集成工作流的密钥名称
+- [ ] 在 `.github/workflows/_release.yml` 中添加发布工作流的密钥（用于预发布测试）
+
+维护者步骤（贡献者**不**应执行这些）：
+
+- [ ] 设置 pypi 和测试 pypi 项目
+- [ ] 将凭证密钥添加到 Github Actions
+- [ ] 将包添加到 conda-forge
+
+## 第三方库在外部仓库
+
+外部仓库中的第三方库必须在 LangChain 团队和
+合作组织之间进行协调，以确保它们得到维护和更新。
+
+如果您有兴趣在外部仓库中创建第三方库，请先从
+LangChain 仓库中的一个开始，然后联系 LangChain 团队讨论
+如何将其迁移到外部仓库。

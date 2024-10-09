@@ -1,0 +1,108 @@
+# Elasticsearch
+
+> [Elasticsearch](https://www.elastic.co/elasticsearch/) 是一个分布式的、RESTful的搜索和分析引擎。
+> 它提供一个分布式的、多租户能力的全文搜索引擎，具有HTTP网页接口和无模式
+> JSON文档。
+
+## 安装和设置
+
+### 设置Elasticsearch
+
+有两种方法可以开始使用Elasticsearch：
+
+#### 通过Docker在本地机器上安装Elasticsearch
+
+示例：运行一个安全性禁用的单节点Elasticsearch实例。
+这不推荐用于生产环境。
+
+```bash
+    docker run -p 9200:9200 -e "discovery.type=single-node" -e "xpack.security.enabled=false" -e "xpack.security.http.ssl.enabled=false" docker.elastic.co/elasticsearch/elasticsearch:8.9.0
+```
+
+#### 在 Elastic Cloud 上部署 Elasticsearch
+
+`Elastic Cloud` 是一个托管的 Elasticsearch 服务。注册 [免费试用](https://cloud.elastic.co/registration?utm_source=langchain&utm_content=documentation)。
+
+### 安装客户端
+
+```bash
+pip install elasticsearch
+pip install langchain-elasticsearch
+```
+
+## 嵌入模型
+
+查看 [使用示例](/docs/integrations/text_embedding/elasticsearch)。
+
+```python
+from langchain_elasticsearch import ElasticsearchEmbeddings
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/elasticsearch)。
+
+```python
+from langchain_elasticsearch import ElasticsearchStore
+```
+
+### 第三方集成
+
+#### EcloudESVectorStore
+
+```python
+from langchain_community.vectorstores.ecloud_vector_search import EcloudESVectorStore
+```
+
+## 检索器
+
+### ElasticsearchRetriever
+
+`ElasticsearchRetriever` 使得灵活访问所有 Elasticsearch 功能成为可能
+通过查询 DSL。
+
+查看 [使用示例](/docs/integrations/retrievers/elasticsearch_retriever)。
+
+```python
+from langchain_elasticsearch import ElasticsearchRetriever
+```
+
+### BM25
+
+查看 [使用示例](/docs/integrations/retrievers/elastic_search_bm25)。
+
+```python
+from langchain_community.retrievers import ElasticSearchBM25Retriever
+```
+## 内存
+
+查看 [使用示例](/docs/integrations/memory/elasticsearch_chat_message_history)。
+
+```python
+from langchain_elasticsearch import ElasticsearchChatMessageHistory
+```
+
+## LLM 缓存
+
+查看 [使用示例](/docs/integrations/llm_caching/#elasticsearch-cache)。
+
+```python
+from langchain_elasticsearch import ElasticsearchCache
+```
+
+## 字节存储
+
+查看[使用示例](/docs/integrations/stores/elasticsearch)。
+
+```python
+from langchain_elasticsearch import ElasticsearchEmbeddingsCache
+```
+
+## 链
+
+这是一个与Elasticsearch数据库交互的链。
+
+```python
+from langchain.chains.elasticsearch_database import ElasticsearchDatabaseChain
+```
+

@@ -1,0 +1,53 @@
+# CogniSwitch
+
+> [CogniSwitch](https://www.cogniswitch.ai/aboutus) 是一个基于API的数据平台，
+> 通过提取实体、概念及其关系来增强企业数据，
+> 从而将这些数据转换为多维格式并存储在
+> 一个可以容纳这些增强内容的数据库中。在我们的案例中，数据被存储在
+> 一个知识图谱中。这些增强的数据现在可以被大型语言模型和
+> 其他生成式AI应用程序消费，确保数据可用且上下文得以保持。
+> 从而消除幻觉并提供准确性。
+
+## 工具包
+
+请参见 [安装说明和使用示例](/docs/integrations/tools/cogniswitch)。
+
+```python
+from langchain_community.agent_toolkits import CogniswitchToolkit
+```
+
+## 工具
+
+### Cogniswitch知识请求
+
+> 使用CogniSwitch服务回答问题的工具。
+
+```python
+from langchain_community.tools.cogniswitch.tool import CogniswitchKnowledgeRequest
+```
+
+### Cogniswitch知识源文件
+
+> 使用CogniSwitch服务从文件存储数据的工具。
+
+```python
+from langchain_community.tools.cogniswitch.tool import CogniswitchKnowledgeSourceFile
+```
+
+### Cogniswitch知识源URL
+
+> 使用CogniSwitch服务从URL存储数据的工具。
+
+```python
+from langchain_community.tools.cogniswitch.tool import CogniswitchKnowledgeSourceURL
+```
+
+### Cogniswitch知识状态
+
+> 使用CogniSwitch服务获取上传文档或URL状态的工具。
+
+```python
+from langchain_community.tools.cogniswitch.tool import CogniswitchKnowledgeStatus
+```
+
+

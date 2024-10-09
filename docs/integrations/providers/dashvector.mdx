@@ -1,0 +1,39 @@
+# DashVector
+
+> [DashVector](https://help.aliyun.com/document_detail/2510225.html) 是一个完全托管的向量数据库服务，支持高维稠密和稀疏向量、实时插入和过滤搜索。它旨在自动扩展，并能够适应不同的应用需求。
+
+本文档演示了如何在LangChain生态系统中利用DashVector。特别是，它展示了如何安装DashVector，以及如何将其用作LangChain中的VectorStore插件。
+它分为两个部分：安装和设置，然后是对特定DashVector包装器的引用。
+
+## 安装和设置
+
+
+安装Python SDK：
+
+```bash
+pip install dashvector
+```
+
+您必须拥有一个API密钥。以下是[安装说明](https://help.aliyun.com/document_detail/2510223.html)。
+
+
+## 嵌入模型
+
+```python
+from langchain_community.embeddings import DashScopeEmbeddings
+```
+
+请参见[使用示例](/docs/integrations/vectorstores/dashvector)。
+
+
+## 向量存储
+
+DashVector集合被包装为一个熟悉的向量存储，以便在LangChain中本地使用，
+这使得它可以方便地用于各种场景，例如语义搜索或示例选择。
+
+您可以通过以下方式导入向量存储：
+```python
+from langchain_community.vectorstores import DashVector
+```
+
+有关DashVector包装器的详细操作，请参阅[此笔记本](/docs/integrations/vectorstores/dashvector)。

@@ -1,0 +1,31 @@
+# vlite
+
+本页面介绍如何在LangChain中使用[vlite](https://github.com/sdan/vlite)。vlite是一个简单快速的向量数据库，用于存储和检索嵌入。
+
+## 安装和设置
+
+要安装vlite，请运行以下命令：
+
+```bash
+pip install vlite
+```
+
+要支持PDF OCR，请安装`vlite[ocr]`扩展：
+
+```bash
+pip install vlite[ocr]
+```
+
+## 向量存储
+
+vlite提供了一个其向量数据库的封装，允许您将其用作语义搜索和示例选择的向量存储。
+
+要导入vlite向量存储：
+
+```python
+from langchain_community.vectorstores import vlite
+```
+
+### 使用方法
+
+有关vlite封装的更详细的操作指南，请参见[此笔记本](/docs/integrations/vectorstores/vlite)。

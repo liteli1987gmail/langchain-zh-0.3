@@ -1,0 +1,50 @@
+# Llama.cpp
+
+>[llama.cpp python](https://github.com/abetlen/llama-cpp-python) 库是 `@ggerganov` 的简单 Python 绑定
+>[llama.cpp](https://github.com/ggerganov/llama.cpp)。
+>
+>该包提供：
+>
+> - 通过 ctypes 接口访问 C API 的低级访问。
+> - 用于文本补全的高级 Python API
+>   - 类似于 `OpenAI` 的 API
+>   - `LangChain` 兼容性
+>   - `LlamaIndex` 兼容性
+> - OpenAI 兼容的网络服务器
+>   - 本地 Copilot 替代品
+>   - 函数调用支持
+>   - 视觉 API 支持
+>   - 多模型
+
+## 安装与设置
+
+- 安装 Python 包
+  ```bash
+  pip install llama-cpp-python
+  ````
+- Download one of the [supported models](https://github.com/ggerganov/llama.cpp#description) and convert them to the llama.cpp format per the [instructions](https://github.com/ggerganov/llama.cpp)
+
+
+## Chat models
+
+See a [usage example](/docs/integrations/chat/llamacpp).
+
+```python
+from langchain_community.chat_models import ChatLlamaCpp
+```
+
+## 大型语言模型
+
+查看[使用示例](/docs/integrations/llms/llamacpp)。
+
+```python
+from langchain_community.llms import LlamaCpp
+```
+
+## 嵌入模型
+
+查看[使用示例](/docs/integrations/text_embedding/llamacpp)。
+
+```python
+from langchain_community.embeddings import LlamaCppEmbeddings
+```

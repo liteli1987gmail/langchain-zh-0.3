@@ -1,0 +1,25 @@
+# USearch
+>[USearch](https://unum-cloud.github.io/usearch/) 是一个更小、更快的单文件向量搜索引擎。
+
+> `USearch` 的基本功能与 `FAISS` 相同，接口应该看起来
+> 如果你曾经研究过近似最近邻搜索，会很熟悉。
+> `USearch` 和 `FAISS` 都采用 `HNSW` 算法，但在设计原则上有显著差异。
+> `USearch` 体积小且与 FAISS 广泛兼容，
+> 不牺牲性能，主要关注用户定义的指标和更少的依赖。
+>
+## 安装和设置
+
+我们需要安装 `usearch` python 包。
+
+```bash
+pip install usearch
+```
+
+## 向量存储
+
+查看[使用示例](/docs/integrations/vectorstores/usearch)。
+
+```python
+from langchain_community.vectorstores import USearch
+```
+

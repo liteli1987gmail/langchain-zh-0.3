@@ -1,0 +1,24 @@
+# Ascend
+
+>[Ascend](https://https://www.hiascend.com/) 是华为提供的自然处理单元
+
+本页面介绍如何在LangChain中使用Ascend NPU。
+
+### 安装
+
+使用torch-npu进行安装：
+
+```bash
+pip install torch-npu
+```
+
+请按照以下说明进行安装：
+* 按照 [这里](https://www.hiascend.com/document/detail/zh/canncommercial/700/quickstart/quickstart/quickstart_18_0002.html) 所示安装 CANN。
+
+### 嵌入模型
+
+查看 [使用示例](/docs/integrations/text_embedding/ascend)。
+
+```python
+from langchain_community.embeddings import AscendEmbeddings
+```

@@ -1,0 +1,118 @@
+---
+sidebar_position: 1
+---
+
+# 如何从 v0.0 内存迁移
+
+自初始发布以来，LangChain 中的内存概念已经显著演变。
+
+广义而言，LangChain 0.0.x 内存用于处理三个主要用例：
+
+| 用例                                 | 示例                                                                                                                               |
+|--------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 管理对话历史                        | 仅保留用户与 AI 之间对话的最后 `n` 次交互。                                                                                       |
+| 结构化信息提取                     | 从对话历史中提取结构化信息，例如关于用户的已知事实列表。                                                                           |
+| 复合内存实现                        | 结合多个内存来源，例如关于用户的已知事实列表以及在特定对话中学到的事实。                                                         |
+
+虽然 LangChain 0.0.x 内存抽象是有用的，但它们的能力有限，并不适合现实世界的对话 AI 应用。这些内存抽象缺乏对多用户、多对话场景的内置支持，而这些对于实用的对话 AI 系统至关重要。
+
+本指南将帮助您将内存实现的使用从 LangChain v0.0.x 迁移到 LangGraph 的持久化实现。
+
+## 为什么使用 LangGraph 进行记忆？
+
+LangGraph 中持久性实现的主要优点包括：
+
+- 内置支持多用户、多对话场景，这通常是现实世界对话 AI 应用的要求。
+- 能够随时保存和恢复复杂状态，以便进行错误恢复、人机协作工作流、时间旅行交互等。
+- 完全支持 [大型语言模型](/docs/concepts/#llms) 和 [聊天模型](/docs/concepts/#chat-models)。相比之下，v0.0.x 的记忆抽象是在聊天模型 API 存在和广泛采用之前创建的，因此与聊天模型的兼容性较差（例如，无法与工具调用聊天模型一起使用）。
+- 提供高度的定制和控制能力，允许使用不同的后端进行记忆实现。
+
+## 迁移
+
+:::info Prerequisites
+
+这些指南假设您对以下概念有一定的了解：
+- [LangGraph](https://langchain-ai.github.io/langgraph/)
+- [v0.0.x 记忆](https://python.langchain.com/v0.1/docs/modules/memory/)
+- [如何为您的图添加持久性（“记忆”）](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
+:::
+
+### 1. 管理对话历史
+
+管理对话历史的目标是以对聊天模型使用最优的方式存储和检索历史记录。
+
+这通常涉及修剪和/或总结对话历史，以保留对话中最相关的部分，同时使对话适应聊天模型的上下文窗口。
+
+属于此类别的记忆类包括：
+
+| 记忆类型                       | 如何迁移                                               | 描述                                                                                                                                                                                                         |
+|-----------------------------------|:-------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ConversationBufferMemory`        | [迁移指南链接](conversation_buffer_memory)        | 一种基本的记忆实现，简单地存储对话历史。                                                                                                                                          |
+| `ConversationStringBufferMemory`  | [迁移指南链接](conversation_buffer_memory)        | `ConversationBufferMemory` 的特殊情况，专为大型语言模型设计，现已不再相关。                                                                                                                              |
+| `ConversationBufferWindowMemory`  | [迁移指南链接](conversation_buffer_window_memory) | 保留对话的最后 `n` 次轮次。当缓冲区满时，丢弃最旧的轮次。                                                                                                                        |
+| `ConversationTokenBufferMemory`   | [迁移指南链接](conversation_buffer_window_memory) | 在对话中仅保留最近的消息，前提是对话中的总令牌数不超过某个限制。                                                   |
+| `ConversationSummaryMemory`       | [迁移指南链接](conversation_summary_memory)       | 持续总结对话历史。每次对话轮次后，摘要会更新。该抽象返回对话历史的摘要。                                              |
+| `ConversationSummaryBufferMemory` | [迁移指南链接](conversation_summary_memory)       | 提供对话的实时摘要，以及在对话中最近的消息，前提是对话中的总令牌数不超过某个限制。 |
+| `VectorStoreRetrieverMemory`      | 尚无迁移指南                                       | 将对话历史存储在向量存储中，并根据输入检索过去对话中最相关的部分。                                                                                    |
+
+
+### 2. 从对话历史中提取结构化信息
+
+属于此类别的内存类包括：
+
+| 内存类型                | 描述                                                                                                                                                                                                       |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `BaseEntityStore`          | 一种抽象接口，类似于键值存储。用于存储在对话中学习到的结构化信息。信息必须表示为键值对的字典。 |
+| `ConversationEntityMemory` | 结合了总结对话的能力，同时从对话历史中提取结构化信息。                                                                                         |
+
+以及抽象的具体后端实现：
+
+| 内存类型                   | 描述                                                                                                  |
+|---------------------------|----------------------------------------------------------------------------------------------------------|
+| `InMemoryEntityStore`     | `BaseEntityStore` 的一种实现，将信息存储在计算机的实际内存 (RAM) 中。                               |
+| `RedisEntityStore`        | `BaseEntityStore` 的一种具体实现，使用 Redis 作为后端。                                            |
+| `SQLiteEntityStore`       | `BaseEntityStore` 的一种具体实现，使用 SQLite 作为后端。                                           |
+| `UpstashRedisEntityStore` | `BaseEntityStore` 的一种具体实现，使用 Upstash 作为后端。                                          |
+
+自初始发布以来，这些抽象并没有得到太多开发。原因是
+是这些抽象通常需要针对特定应用进行大量专业化，才能发挥作用，因此这些
+抽象的使用范围不如会话历史管理抽象广泛。
+
+因此，这些抽象没有迁移指南。如果您在迁移依赖于这些抽象的应用程序时遇到困难，请在LangChain GitHub仓库中打开一个问题，我们将尽量优先提供
+有关如何迁移这些抽象的更多指导。
+从聊天历史中提取结构化信息的一般策略是使用具有工具调用能力的聊天模型，从聊天历史中提取结构化信息。
+
+提取的信息可以保存到适当的数据结构中（例如，字典），并可以根据需要从中检索信息并添加到提示中。
+### 3. 提供一个或多个内存实现之上的复合逻辑的实现
+
+属于此类别的内存类包括：
+
+| 内存类型              | 描述                                                                                                                        |
+
+|------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `CombinedMemory`       | 此抽象接受一个`BaseMemory`的列表，并根据输入从每个内存中获取相关的记忆信息。                                             |
+| `CombinedMemory`       | 该抽象接受一个 `BaseMemory` 列表，并根据输入从每个 `BaseMemory` 中获取相关的记忆信息。 |
+| `SimpleMemory`         | 用于添加只读的硬编码上下文。用户可以简单地将这些信息写入提示词中。                             |
+| `ReadOnlySharedMemory` | 提供了现有 `BaseMemory` 实现的只读视图。                                                          |
+
+这些实现似乎并未被广泛使用或提供显著的价值。用户应该能够
+在自定义代码中不费太多力气地重新实现这些功能。
+
+## 相关资源
+
+探索与 LangGraph 的持久性：
+
+* [LangGraph 快速入门教程](https://langchain-ai.github.io/langgraph/tutorials/introduction/)
+* [如何为您的图添加持久性（“记忆”）](https://langchain-ai.github.io/langgraph/how-tos/persistence/)
+* [如何管理对话历史](https://langchain-ai.github.io/langgraph/how-tos/memory/manage-conversation-history/)
+* [如何添加对话历史的摘要](https://langchain-ai.github.io/langgraph/how-tos/memory/add-summary-conversation-history/)
+
+使用简单的 LCEL 添加持久性（对于更复杂的用例，建议使用 langgraph）：
+
+* [如何添加消息历史](https://python.langchain.com/docs/how_to/message_history/)
+
+处理消息历史：
+
+* [如何修剪消息](https://python.langchain.com/docs/how_to/trim_messages)
+* [如何过滤消息](https://python.langchain.com/docs/how_to/filter_messages/)
+* [如何合并消息运行](https://python.langchain.com/docs/how_to/merge_message_runs/)

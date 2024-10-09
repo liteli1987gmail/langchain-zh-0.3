@@ -1,0 +1,139 @@
+# 文本嵌入模型
+
+:::info
+前往 [集成](/docs/integrations/text_embedding/) 获取与文本嵌入大模型供应商的内置集成文档。
+:::
+
+Embeddings 类是一个用于与文本嵌入模型接口的类。有很多嵌入大模型供应商（OpenAI、Cohere、Hugging Face 等） - 这个类旨在为它们提供一个标准接口。
+
+嵌入会创建一段文本的向量表示。这是有用的，因为这意味着我们可以在向量空间中思考文本，并进行语义搜索，寻找在向量空间中最相似的文本片段。
+
+LangChain 中的基础 Embeddings 类提供了两个方法：一个用于嵌入文档，一个用于嵌入查询。前者，`.embed_documents`，接受多个文本作为输入，而后者，`.embed_query`，接受单个文本。将这两个方法分开是因为某些嵌入大模型供应商对文档（待搜索的内容）和查询（搜索查询本身）有不同的嵌入方法。
+`.embed_query` 将返回一个浮点数列表，而 `.embed_documents` 返回一个浮点数列表的列表。
+
+## 开始使用
+
+### 设置
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="openai" label="OpenAI" default>
+要开始，我们需要安装 OpenAI 合作伙伴包：
+
+```bash
+pip install langchain-openai
+```
+
+访问API需要一个API密钥，您可以通过创建一个帐户并前往[这里](https://platform.openai.com/account/api-keys)来获取。一旦我们有了密钥，我们将通过运行将其设置为环境变量：
+
+```bash
+export OPENAI_API_KEY="..."
+```
+
+如果您不想设置环境变量，可以在初始化OpenAI LLM类时通过`api_key`命名参数直接传递密钥：
+
+```python
+from langchain_openai import OpenAIEmbeddings
+
+embeddings_model = OpenAIEmbeddings(api_key="...")
+```
+
+否则，您可以在没有任何参数的情况下进行初始化：
+```python
+from langchain_openai import OpenAIEmbeddings
+
+embeddings_model = OpenAIEmbeddings()
+```
+
+  </TabItem>
+  <TabItem value="cohere" label="Cohere">
+
+首先，我们需要安装Cohere SDK包：
+
+```bash
+pip install langchain-cohere
+```
+
+访问API需要一个API密钥，您可以通过创建一个帐户并前往[这里](https://dashboard.cohere.com/api-keys)来获取。一旦我们有了密钥，我们将通过运行将其设置为环境变量：
+
+```shell
+export COHERE_API_KEY="..."
+```
+
+如果您不想设置环境变量，可以在初始化Cohere LLM类时通过`cohere_api_key`命名参数直接传递密钥：
+
+```python
+from langchain_cohere import CohereEmbeddings
+
+embeddings_model = CohereEmbeddings(cohere_api_key="...", model='embed-english-v3.0')
+```
+
+否则，您可以简单地按照下面所示进行初始化：
+```python
+from langchain_cohere import CohereEmbeddings
+
+embeddings_model = CohereEmbeddings(model='embed-english-v3.0')
+```
+请注意，在初始化CohereEmbeddings类时必须传递模型参数。
+
+  </TabItem>
+  <TabItem value="huggingface" label="Hugging Face">
+
+首先，我们需要安装Hugging Face合作伙伴包：
+
+```bash
+pip install langchain-huggingface
+```
+
+然后，您可以从Hugging Face Hub加载任何[句子变换器模型](https://huggingface.co/models?library=sentence-transformers)。
+
+```python
+from langchain_huggingface import HuggingFaceEmbeddings
+
+embeddings_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
+```
+  </TabItem>
+</Tabs>
+
+### `embed_documents`
+#### 嵌入文本列表
+
+使用 `.embed_documents` 嵌入字符串列表，返回嵌入列表：
+
+```python
+embeddings = embeddings_model.embed_documents(
+    [
+        "Hi there!",
+        "Oh, hello!",
+        "What's your name?",
+        "My friends call me World",
+        "Hello World!"
+    ]
+)
+len(embeddings), len(embeddings[0])
+```
+
+```output
+(5, 1536)
+```
+
+
+### `embed_query`
+#### 嵌入单个查询
+使用 `.embed_query` 嵌入单个文本（例如，用于与其他嵌入文本进行比较）。
+
+```python
+embedded_query = embeddings_model.embed_query("What was the name mentioned in the conversation?")
+embedded_query[:5]
+```
+
+```output
+[0.0053587136790156364,
+ -0.0004999046213924885,
+ 0.038883671164512634,
+ -0.003001077566295862,
+ -0.00900818221271038]
+```
+

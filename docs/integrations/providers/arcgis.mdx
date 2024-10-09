@@ -1,0 +1,27 @@
+# ArcGIS
+
+> [ArcGIS](https://www.esri.com/en-us/arcgis/about-arcgis/overview) 是一系列客户端、
+> 服务器和在线地理信息系统软件，由 [Esri](https://www.esri.com/) 开发和维护。
+>
+> `ArcGISLoader` 使用 `arcgis` 包。
+> `arcgis` 是一个用于矢量和栅格分析、地理编码、制图、
+> 路由和方向的 Python 库。它管理、组织和管理您的 GIS 中的用户、
+> 组和信息项。
+> 它使您能够访问来自 `Esri`
+> 和其他权威来源的现成地图和策划的地理数据，并与您自己的数据一起使用。
+
+## 安装与设置
+
+我们需要安装 `arcgis` 包。
+
+```bash
+pip install -U arcgis
+```
+
+## 文档加载器
+
+查看[使用示例](/docs/integrations/document_loaders/arcgis)。
+
+```python
+from langchain_community.document_loaders import ArcGISLoader
+```

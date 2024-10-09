@@ -1,0 +1,38 @@
+# TiDB
+
+> [TiDB Cloud](https://www.pingcap.com/tidb-serverless)，是一个综合的数据库即服务 (DBaaS) 解决方案，
+> 提供专用和无服务器选项。`TiDB Serverless` 现在正在集成
+> 内置的向量搜索到 MySQL 生态中。通过此增强，您可以无缝地
+> 使用 `TiDB Serverless` 开发 AI 应用，而无需新的数据库或额外的
+> 技术栈。创建一个免费的 TiDB Serverless 集群，并在 https://pingcap.com/ai 开始使用向量搜索功能。
+
+
+## 安装和设置
+
+您需要获取 TiDB 数据库的连接详细信息。
+访问 [TiDB Cloud](https://tidbcloud.com/) 获取连接详细信息。
+
+```bash
+## Document loader
+
+```python
+from langchain_community.document_loaders import TiDBLoader
+```
+
+请参阅详细信息 [这里](/docs/integrations/document_loaders/tidb)。
+
+## 向量存储
+
+```python
+from langchain_community.vectorstores import TiDBVectorStore
+```
+请参阅详细信息 [这里](/docs/integrations/vectorstores/tidb_vector)。
+
+
+## 内存
+
+```python
+from langchain_community.chat_message_histories import TiDBChatMessageHistory
+```
+
+请参阅详细信息 [这里](/docs/integrations/memory/tidb_chat_message_history)。

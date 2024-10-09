@@ -1,0 +1,23 @@
+# Epsilla
+
+本页面介绍如何在LangChain中使用[Epsilla](https://github.com/epsilla-cloud/vectordb)。
+它分为两个部分：安装和设置，以及对特定Epsilla包装器的引用。
+
+## 安装和设置
+
+- 使用`pip/pip3 install pyepsilla`安装Python SDK
+
+## 包装器
+
+### 向量存储
+
+存在一个围绕Epsilla向量数据库的包装器，允许您将其用作向量存储，
+无论是用于语义搜索还是示例选择。
+
+要导入此向量存储：
+
+```python
+from langchain_community.vectorstores import Epsilla
+```
+
+有关Epsilla包装器的更详细说明，请参见[此笔记本](/docs/integrations/vectorstores/epsilla)

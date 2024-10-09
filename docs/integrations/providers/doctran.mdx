@@ -1,0 +1,37 @@
+# Doctran
+
+> [Doctran](https://github.com/psychic-api/doctran) 是一个 Python 包。它使用大型语言模型和开源
+> 自然语言处理库，将原始文本转换为干净、结构化、信息密集的文档
+> 这些文档经过优化以便于向量空间检索。你可以把 `Doctran` 想象成一个黑箱，
+> 杂乱的字符串输入，干净、标记的字符串输出。
+
+
+## 安装和设置
+
+```bash
+pip install doctran
+```
+
+## 文档转换器
+
+### 文档审问器
+
+查看 [DoctranQATransformer 的使用示例](/docs/integrations/document_transformers/doctran_interrogate_document)。
+
+```python
+from langchain_community.document_loaders import DoctranQATransformer
+```
+### 属性提取器
+
+查看 [DoctranPropertyExtractor 的使用示例](/docs/integrations/document_transformers/doctran_extract_properties)。
+
+```python
+from langchain_community.document_loaders import DoctranPropertyExtractor
+```
+### 文档翻译器
+
+查看 [DoctranTextTranslator 的使用示例](/docs/integrations/document_transformers/doctran_translate_document)。
+
+```python
+from langchain_community.document_loaders import DoctranTextTranslator
+```

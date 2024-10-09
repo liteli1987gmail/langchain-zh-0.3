@@ -1,0 +1,56 @@
+# Yandex
+
+与 Yandex Cloud 相关的所有功能
+
+>[Yandex Cloud](https://cloud.yandex.com/en/) 是一个公共云平台。
+
+## 安装和设置
+
+Yandex Cloud SDK 可以通过 pip 从 PyPI 安装：
+
+```bash
+pip install yandexcloud
+```
+
+## 大型语言模型
+
+### YandexGPT
+
+查看 [使用示例](/docs/integrations/llms/yandex)。
+
+```python
+from langchain_community.llms import YandexGPT
+```
+
+## 聊天模型
+
+### YandexGPT
+
+查看 [使用示例](/docs/integrations/chat/yandex)。
+
+```python
+from langchain_community.chat_models import ChatYandexGPT
+```
+
+## 嵌入模型
+
+### YandexGPT
+
+查看 [使用示例](/docs/integrations/text_embedding/yandex)。
+
+```python
+from langchain_community.embeddings import YandexGPTEmbeddings
+```
+
+## 解析器
+
+### YandexSTTParser
+
+它转录并解析音频文件。
+
+`YandexSTTParser` 类似于 `OpenAIWhisperParser`。
+查看 [与 OpenAIWhisperParser 的使用示例](/docs/integrations/document_loaders/youtube_audio)。
+
+```python
+from langchain_community.document_loaders import YandexSTTParser
+```

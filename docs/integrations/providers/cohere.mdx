@@ -1,0 +1,157 @@
+# Cohere
+
+>[Cohere](https://cohere.ai/about) 是一家提供自然语言处理模型的加拿大初创公司
+> 该模型帮助公司改善人机交互。
+
+## 安装和设置
+- 安装 Python SDK :
+```bash
+pip install langchain-cohere
+```
+
+获取一个 [Cohere api 密钥](https://dashboard.cohere.ai/) 并将其设置为环境变量 (`COHERE_API_KEY`)
+
+## Cohere LangChain 集成
+
+|API|描述|端点文档|导入|示例用法|
+|---|---|---|---|---|
+|聊天|构建聊天机器人|[聊天](https://docs.cohere.com/reference/chat)|`from langchain_cohere import ChatCohere`|[cohere.ipynb](/docs/integrations/chat/cohere)|
+|大型语言模型|生成文本|[生成](https://docs.cohere.com/reference/generate)|`from langchain_cohere.llms import Cohere`|[cohere.ipynb](/docs/integrations/llms/cohere)|
+|RAG 检索器|连接到外部数据源|[聊天 + RAG](https://docs.cohere.com/reference/chat)|`from langchain.retrievers import CohereRagRetriever`|[cohere.ipynb](/docs/integrations/retrievers/cohere)|
+|文本嵌入|将字符串嵌入到向量|[嵌入](https://docs.cohere.com/reference/embed)|`from langchain_cohere import CohereEmbeddings`|[cohere.ipynb](/docs/integrations/text_embedding/cohere)|
+|重新排序检索器|根据相关性对字符串进行排序|[重新排序](https://docs.cohere.com/reference/rerank)|`from langchain.retrievers.document_compressors import CohereRerank`|[cohere.ipynb](/docs/integrations/retrievers/cohere-reranker)|
+
+## 快速复制示例
+
+### 聊天
+
+```python
+from langchain_cohere import ChatCohere
+from langchain_core.messages import HumanMessage
+chat = ChatCohere()
+messages = [HumanMessage(content="knock knock")]
+print(chat.invoke(messages))
+```
+
+使用 Cohere [聊天模型](/docs/integrations/chat/cohere)
+
+### 大型语言模型
+
+
+```python
+from langchain_cohere.llms import Cohere
+
+llm = Cohere()
+print(llm.invoke("Come up with a pet name"))
+```
+
+使用 Cohere (遗留) [LLM 模型](/docs/integrations/llms/cohere)
+
+### 工具调用
+```python
+from langchain_cohere import ChatCohere
+from langchain_core.messages import (
+    HumanMessage,
+    ToolMessage,
+)
+from langchain_core.tools import tool
+
+@tool
+def magic_function(number: int) -> int:
+    """Applies a magic operation to an integer
+
+    Args:
+        number: Number to have magic operation performed on
+    """
+    return number + 10
+
+def invoke_tools(tool_calls, messages):
+    for tool_call in tool_calls:
+        selected_tool = {"magic_function":magic_function}[
+            tool_call["name"].lower()
+        ]
+        tool_output = selected_tool.invoke(tool_call["args"])
+        messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
+    return messages
+
+tools = [magic_function]
+
+llm = ChatCohere()
+llm_with_tools = llm.bind_tools(tools=tools)
+messages = [
+    HumanMessage(
+        content="What is the value of magic_function(2)?"
+    )
+]
+
+res = llm_with_tools.invoke(messages)
+while res.tool_calls:
+    messages.append(res)
+    messages = invoke_tools(res.tool_calls, messages)
+    res = llm_with_tools.invoke(messages)
+
+print(res.content)
+```
+可以通过将必要的工具绑定到上述的 LLM 来进行 Cohere LLM 的工具调用。
+另一种选择是支持使用 ReAct 代理进行多跳工具调用，如下所示。
+
+### ReAct 代理
+
+该代理基于论文
+[ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)。
+
+```python
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_cohere import ChatCohere, create_cohere_react_agent
+from langchain_core.prompts import ChatPromptTemplate
+from langchain.agents import AgentExecutor
+
+llm = ChatCohere()
+
+internet_search = TavilySearchResults(max_results=4)
+internet_search.name = "internet_search"
+internet_search.description = "Route a user query to the internet"
+
+prompt = ChatPromptTemplate.from_template("{input}")
+
+agent = create_cohere_react_agent(
+    llm,
+    [internet_search],
+    prompt
+)
+
+agent_executor = AgentExecutor(agent=agent, tools=[internet_search], verbose=True)
+
+agent_executor.invoke({
+    "input": "In what year was the company that was founded as Sound of Music added to the S&P 500?",
+})
+```
+ReAct代理可以用于按顺序调用多个工具。
+
+### RAG检索器
+
+```python
+from langchain_cohere import ChatCohere
+from langchain.retrievers import CohereRagRetriever
+from langchain_core.documents import Document
+
+rag = CohereRagRetriever(llm=ChatCohere())
+print(rag.invoke("What is cohere ai?"))
+```
+
+使用Cohere [RAG检索器](/docs/integrations/retrievers/cohere)
+
+### 文本嵌入
+
+```python
+from langchain_cohere import CohereEmbeddings
+
+embeddings = CohereEmbeddings(model="embed-english-light-v3.0")
+print(embeddings.embed_documents(["This is a test document."]))
+```
+
+使用Cohere [文本嵌入模型](/docs/integrations/text_embedding/cohere)
+
+### 重新排序器
+
+使用Cohere [重新排序器](/docs/integrations/retrievers/cohere-reranker)

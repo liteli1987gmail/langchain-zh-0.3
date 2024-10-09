@@ -1,0 +1,42 @@
+# AssemblyAI
+
+> [AssemblyAI](https://www.assemblyai.com/) 构建 `语音AI` 模型，用于以下任务
+语音转文本、说话人分离、语音摘要等。
+> `AssemblyAI` 的语音AI模型包括对语音数据的准确语音转文本
+> （如电话、虚拟会议和播客）、说话人检测、情感分析、
+> 章节检测、个人身份信息（PII）去标识化。
+ 
+
+
+## 安装和设置
+
+获取您的 [API 密钥](https://www.assemblyai.com/dashboard/signup)。
+
+安装 `assemblyai` 包。
+
+```bash
+pip install -U assemblyai
+```
+
+## 文档加载器
+
+### AssemblyAI 音频转录
+
+`AssemblyAIAudioTranscriptLoader` 使用 `AssemblyAI API` 转录音频文件
+并将转录的文本加载到文档中。
+
+查看 [使用示例](/docs/integrations/document_loaders/assemblyai)。
+
+```python
+from langchain_community.document_loaders import AssemblyAIAudioTranscriptLoader
+```
+
+### 按 ID 加载 AssemblyAI 音频
+
+`AssemblyAIAudioLoaderById` 使用 AssemblyAI API 获取现有的
+转录并将转录的文本加载到一个或多个文档中，
+具体取决于指定的格式。
+
+```python
+from langchain_community.document_loaders import AssemblyAIAudioLoaderById
+```

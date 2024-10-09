@@ -1,0 +1,20 @@
+# ClickUp
+
+>[ClickUp](https://clickup.com/) 是一个全方位的生产力平台，为各行业的小型和大型团队提供灵活且可定制的工作管理解决方案、工具和功能。
+>
+>它是一个基于云的项目管理解决方案，适用于各种规模的企业，具有沟通和协作工具，以帮助实现组织目标。
+
+## 安装和设置
+
+1. 创建一个 [ClickUp 应用](https://help.clickup.com/hc/en-us/articles/6303422883095-Create-your-own-app-with-the-ClickUp-API)
+2. 按照 [这些步骤](https://clickup.com/api/developer-portal/authentication/) 获取您的 client_id 和 client_secret。
+
+## 工具包
+
+```python
+from langchain_community.agent_toolkits.clickup.toolkit import ClickupToolkit
+from langchain_community.utilities.clickup import ClickupAPIWrapper
+```
+
+查看[使用示例](/docs/integrations/tools/clickup)。
+

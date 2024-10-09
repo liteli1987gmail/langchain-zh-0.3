@@ -1,0 +1,44 @@
+# OpenWeatherMap
+
+>[OpenWeatherMap](https://openweathermap.org/api/) 提供特定位置的所有基本天气数据：
+>- 当前天气
+>- 1小时的分钟预报
+>- 48小时的小时预报
+>- 8天的每日预报
+>- 国家天气警报
+>- 40多年历史的天气数据
+
+本页面介绍如何在 LangChain 中使用 `OpenWeatherMap API`。
+
+## 安装和设置
+
+- 安装依赖项
+```bash
+pip install pyowm
+```
+- 前往 OpenWeatherMap 并注册一个账户以获取您的 API 密钥 [这里](https://openweathermap.org/api/)
+- 将您的 API 密钥设置为 `OPENWEATHERMAP_API_KEY` 环境变量
+
+## 包装器
+
+### 工具
+
+存在一个 OpenWeatherMapAPIWrapper 工具，它封装了这个 API。要导入这个工具：
+
+```python
+from langchain_community.utilities.openweathermap import OpenWeatherMapAPIWrapper
+```
+
+有关此包装器的更详细的操作指南，请参见 [这个笔记本](/docs/integrations/tools/openweathermap)。
+
+### 工具
+
+您还可以轻松地将此包装器加载为工具（与代理一起使用）。
+您可以通过以下方式做到这一点：
+
+```python
+from langchain.agents import load_tools
+tools = load_tools(["openweathermap-api"])
+```
+
+有关工具的更多信息，请参见 [此页面](/docs/how_to/tools_builtin)。

@@ -1,0 +1,43 @@
+# Yeager.ai
+
+本页面介绍如何使用 [Yeager.ai](https://yeager.ai) 来生成 LangChain 工具和代理。
+
+## 什么是 Yeager.ai？
+Yeager.ai 是一个旨在简化创建 AI 代理和工具过程的生态系统。
+
+它具有 yAgents，一个无代码的 LangChain 代理构建器，使用户能够轻松构建、测试和部署 AI 解决方案。利用 LangChain 框架，yAgents 允许与各种语言模型和资源无缝集成，适合开发者、研究人员和 AI 爱好者在多种应用中的使用。
+
+## yAgents
+低代码生成代理，旨在帮助您轻松构建、原型设计和部署 LangChain 工具。
+
+### 如何使用？
+```
+pip install yeagerai-agent
+yeagerai-agent
+```
+访问 http://127.0.0.1:7860
+
+这将安装必要的依赖项并在您的系统上设置 yAgents。第一次运行后，yAgents 将创建一个 .env 文件，您可以在其中输入您的 OpenAI API 密钥。您也可以直接在 Gradio 界面的“设置”选项卡下进行相同的操作。
+
+`OPENAI_API_KEY=<您的_openai_api_key_here>`
+
+我们建议使用 GPT-4。然而，该工具也可以与 GPT-3 一起使用，只要问题被充分分解。
+
+### 使用 yAgents 创建和执行工具
+yAgents 使创建和执行 AI 驱动的工具变得简单。以下是该过程的简要概述：
+1. 创建工具：要创建工具，请向 yAgents 提供自然语言提示。提示应清楚地描述工具的目的和功能。例如：
+`创建一个返回第 n 个质数的工具`
+
+2. 将工具加载到工具包中：要将工具加载到 yAgents 中，只需向 yAgents 提供一个命令即可。例如：
+`将您刚刚创建的工具加载到您的工具包中`
+
+3. 执行工具：要运行工具或代理，只需向 yAgents 提供一个命令，其中包含工具的名称和任何必需的参数。例如：
+`生成第50个质数`
+
+您可以在 [这里](https://www.youtube.com/watch?v=KA5hCM3RaWE) 查看它是如何工作的的视频。
+
+随着您对 yAgents 的熟悉，您可以创建更高级的工具和代理来自动化您的工作并提高您的生产力。
+
+有关更多信息，请参见 [yAgents 的 Github](https://github.com/yeagerai/yeagerai-agent) 或我们的 [文档](https://yeagerai.gitbook.io/docs/general/welcome-to-yeager.ai)
+
+

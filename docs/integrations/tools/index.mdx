@@ -1,0 +1,92 @@
+---
+sidebar_position: 0
+sidebar_class_name: hidden
+keywords: [compatibility]
+custom_edit_url:
+---
+
+# 工具
+
+[工具](/docs/concepts/#tools) 是设计用于被模型调用的实用程序：它们的输入旨在由模型生成，输出旨在返回给模型。
+
+[工具包](/docs/concepts#toolkits) 是一组旨在一起使用的工具的集合。
+
+:::info
+
+如果您想编写自己的工具，请参见[这个如何做](/docs/how_to/custom_tools/)。
+如果您想贡献一个集成，请参见[贡献集成](/docs/contributing/integrations/)。
+
+:::
+
+## 搜索
+
+下表显示了以某种形式执行在线搜索的工具：
+
+工具/工具包|免费/付费|返回数据
+:-|:-:|:-:
+[必应搜索](/docs/integrations/tools/bing_search)|付费|URL, 摘要, 标题
+[Brave Search](/docs/integrations/tools/brave_search)|免费|URL, 摘要, 标题
+[DuckDuckgoSearch](/docs/integrations/tools/ddg)|免费|URL, 摘要, 标题
+[Exa Search](/docs/integrations/tools/exa_search)|每月1000次免费搜索|URL, 作者, 标题, 发布日期
+[Google Search](/docs/integrations/tools/google_search)|付费|URL, 摘要, 标题
+[Google Serper](/docs/integrations/tools/google_serper)|免费|URL, 摘要, 标题, 搜索排名, 站点链接
+[Jina Search](/docs/integrations/tools/jina_search/)|100万响应令牌免费|URL, 摘要, 标题, 页面内容
+[Mojeek Search](/docs/integrations/tools/mojeek_search)|付费|URL, 摘要, 标题
+[SearchApi](/docs/integrations/tools/searchapi)|注册时100次免费搜索|URL, 摘要, 标题, 搜索排名, 站点链接, 作者
+[SearxNG Search](/docs/integrations/tools/searx_search)|免费|URL, 摘要, 标题, 类别
+[SerpAPI](/docs/integrations/tools/serpapi)|每月100次免费搜索|答案
+[Tavily 搜索](/docs/integrations/tools/tavily_search)|每月1000次免费搜索|网址, 内容, 标题, 图片, 答案
+[You.com 搜索](/docs/integrations/tools/you)|免费使用60天|网址, 标题, 页面内容
+
+## 代码解释器
+
+下表显示可以用作代码解释器的工具：
+
+工具/工具包|支持的语言|沙盒生命周期|支持文件上传|返回类型|支持自托管
+:-|:-:|:-:|:-:|:-:|:-:
+[Azure 容器应用动态会话](/docs/integrations/tools/azure_dynamic_sessions)|Python|1小时|✅|文本, 图片|❌
+[Bearly 代码解释器](/docs/integrations/tools/bearly)|Python|执行时重置|✅|文本|❌
+[E2B 数据分析](/docs/integrations/tools/e2b_data_analysis)|Python. 处于测试阶段: JavaScript, R, Java|24小时|✅|文本, 图片, 视频|✅
+[Riza 代码解释器](/docs/integrations/tools/riza)|Python, JavaScript, PHP, Ruby|执行时重置|❌|文本|✅
+
+## 生产力
+
+下表显示了可以用于自动化生产力工具中的任务的工具：
+
+工具/工具包|定价
+:-|:-:
+[Github 工具包](/docs/integrations/tools/github)|免费
+[Gitlab 工具包](/docs/integrations/tools/gitlab)|个人项目免费
+[Gmail 工具包](/docs/integrations/tools/gmail)|免费，每个用户每秒限250个配额单位
+[Infobip 工具](/docs/integrations/tools/infobip)|免费试用，之后按可变定价
+[Jira 工具包](/docs/integrations/tools/jira)|免费，带有[速率限制](https://developer.atlassian.com/cloud/jira/platform/rate-limiting/)
+[Office365 工具包](/docs/integrations/tools/office365)|与 Office365 一起免费，包括[速率限制](https://learn.microsoft.com/en-us/graph/throttling-limits)
+[Slack 工具包](/docs/integrations/tools/slack)|免费
+[Twilio 工具](/docs/integrations/tools/twilio)|免费试用，之后采用[按需计费](https://www.twilio.com/en-us/pricing)
+
+## 网络浏览
+
+下表显示了可以用于自动化网络浏览器中任务的工具：
+
+工具/工具包|定价|支持与浏览器交互
+:-|:-:|:-:
+[MultiOn 工具包](/docs/integrations/tools/multion)|每天40次免费请求|✅
+[PlayWright 浏览器工具包](/docs/integrations/tools/playwright)|免费|✅
+[Requests 工具包](/docs/integrations/tools/requests)|免费|❌
+
+## 数据库
+
+下表显示了可以用于自动化数据库任务的工具：
+
+工具/工具包|允许的操作
+:-|:-:
+[Cassandra 数据库工具包](/docs/integrations/tools/cassandra_database)|选择和模式 introspection
+[SQL 数据库工具包](/docs/integrations/tools/sql_database)|任何 SQL 操作
+[Spark SQL 工具包](/docs/integrations/tools/spark_sql)|任何 SQL 操作
+
+## 所有工具
+
+import { IndexTable } from "@theme/FeatureTables";
+
+<IndexTable />
+

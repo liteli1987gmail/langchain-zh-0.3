@@ -1,0 +1,85 @@
+# Layerup 安全
+
+该 [Layerup 安全](https://uselayerup.com) 集成允许您保护对任何 LangChain LLM、LLM 链或 LLM 代理的调用。LLM 对象包装在任何现有的 LLM 对象周围，为您的用户和 LLM 之间提供安全层。
+
+虽然 Layerup 安全对象被设计为 LLM，但它实际上并不是一个 LLM，它只是包装在一个 LLM 周围，使其能够适应与底层 LLM 相同的功能。
+
+## 设置
+首先，您需要从 Layerup [网站](https://uselayerup.com) 获取一个 Layerup 安全账户。
+
+接下来，通过 [仪表板](https://dashboard.uselayerup.com) 创建一个项目，并复制您的 API 密钥。我们建议将您的 API 密钥放在项目的环境中。
+
+安装 Layerup 安全 SDK：
+```bash
+pip install LayerupSecurity
+```
+
+并安装 LangChain 社区：
+```bash
+pip install langchain-community
+```
+
+现在您准备好使用 Layerup Security 保护您的 LLM 调用！
+
+```python
+from langchain_community.llms.layerup_security import LayerupSecurity
+from langchain_openai import OpenAI
+
+# Create an instance of your favorite LLM
+openai = OpenAI(
+    model_name="gpt-3.5-turbo",
+    openai_api_key="OPENAI_API_KEY",
+)
+
+# Configure Layerup Security
+layerup_security = LayerupSecurity(
+    # Specify a LLM that Layerup Security will wrap around
+    llm=openai,
+
+    # Layerup API key, from the Layerup dashboard
+    layerup_api_key="LAYERUP_API_KEY",
+
+    # Custom base URL, if self hosting
+    layerup_api_base_url="https://api.uselayerup.com/v1",
+
+    # List of guardrails to run on prompts before the LLM is invoked
+    prompt_guardrails=[],
+
+    # List of guardrails to run on responses from the LLM
+    response_guardrails=["layerup.hallucination"],
+
+    # Whether or not to mask the prompt for PII & sensitive data before it is sent to the LLM
+    mask=False,
+
+    # Metadata for abuse tracking, customer tracking, and scope tracking.
+    metadata={"customer": "example@uselayerup.com"},
+
+    # Handler for guardrail violations on the prompt guardrails
+    handle_prompt_guardrail_violation=(
+        lambda violation: {
+            "role": "assistant",
+            "content": (
+                "There was sensitive data! I cannot respond. "
+                "Here's a dynamic canned response. Current date: {}"
+            ).format(datetime.now())
+        }
+        if violation["offending_guardrail"] == "layerup.sensitive_data"
+        else None
+    ),
+
+    # Handler for guardrail violations on the response guardrails
+    handle_response_guardrail_violation=(
+        lambda violation: {
+            "role": "assistant",
+            "content": (
+                "Custom canned response with dynamic data! "
+                "The violation rule was {}."
+            ).format(violation["offending_guardrail"])
+        }
+    ),
+)
+
+response = layerup_security.invoke(
+    "Summarize this message: my name is Bob Dylan. My SSN is 123-45-6789."
+)
+```

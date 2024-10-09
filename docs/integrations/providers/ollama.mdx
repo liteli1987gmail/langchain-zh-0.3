@@ -1,0 +1,73 @@
+# Ollama
+
+>[Ollama](https://ollama.com/) 允许您本地运行开源大型语言模型，
+> 例如 [Llama3.1](https://ai.meta.com/blog/meta-llama-3-1/)。
+>
+>`Ollama` 将模型权重、配置和数据打包成一个由 Modelfile 定义的单一包。
+>它优化了设置和配置细节，包括 GPU 使用。
+>有关支持的模型和模型变体的完整列表，请参见 [Ollama 模型库](https://ollama.ai/library)。
+
+有关如何使用 `Ollama` 与 LangChain 的更多详细信息，请参见 [本指南](/docs/how_to/local_llms)。
+。
+
+## 安装和设置
+### Ollama 安装
+按照 [这些说明](https://github.com/ollama/ollama?tab=readme-ov-file#ollama) 
+设置并运行本地 Ollama 实例。
+
+如果此功能被禁用，Ollama 将自动作为后台服务启动，请运行：
+
+```bash
+# export OLLAMA_HOST=127.0.0.1 # environment variable to set ollama host
+# export OLLAMA_PORT=11434 # environment variable to set the ollama port
+ollama serve
+```
+
+启动ollama后，运行`ollama pull <model_checkpoint>`以下载模型
+来自[Ollama模型库](https://ollama.ai/library)。
+
+```bash
+ollama pull llama3.1
+```
+
+我们现在准备安装`langchain-ollama`第三方库并运行模型。
+
+### Ollama LangChain第三方库安装
+使用以下命令安装集成包：
+```bash
+pip install langchain-ollama
+```
+## 大型语言模型
+
+```python
+from langchain_ollama.llms import OllamaLLM
+```
+
+请查看笔记本示例[这里](/docs/integrations/llms/ollama)。
+
+## 聊天模型
+
+### 聊天Ollama
+
+```python
+from langchain_ollama.chat_models import ChatOllama
+```
+
+请查看笔记本示例[这里](/docs/integrations/chat/ollama)。
+
+### Ollama 工具调用
+[Ollama 工具调用](https://ollama.com/blog/tool-support) 使用
+与 OpenAI 兼容的网络服务器规范，并可以与
+默认的 `BaseChatModel.bind_tools()` 方法一起使用
+如 [这里](/docs/how_to/tool_calling/) 所述。
+确保选择支持 [工具调用](https://ollama.com/search?&c=tools) 的 ollama 模型。
+
+## 嵌入模型
+
+```python
+from langchain_community.embeddings import OllamaEmbeddings
+```
+
+请参见笔记本示例 [这里](/docs/integrations/text_embedding/ollama)。
+
+

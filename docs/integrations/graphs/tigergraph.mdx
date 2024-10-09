@@ -1,0 +1,37 @@
+# TigerGraph
+
+> [TigerGraph](https://www.tigergraph.com/tigergraph-db/) 是一个原生分布式和高性能的图数据库。
+> 以顶点和边的图形格式存储数据导致丰富的关系，
+> 非常适合为大型语言模型的响应提供基础。
+ 
+一个关于 `TigerGraph` 和 `LangChain` 集成的大示例 [在这里展示](https://github.com/tigergraph/graph-ml-notebooks/blob/main/applications/large_language_models/TigerGraph_LangChain_Demo.ipynb)。
+
+## 安装和设置
+
+按照说明 [如何连接到 `TigerGraph` 数据库](https://docs.tigergraph.com/pytigergraph/current/getting-started/connection)。
+
+安装 Python SDK：
+
+```bash
+pip install pyTigerGraph
+```
+
+## 示例
+
+要使用 `TigerGraph InquiryAI` 功能，您可以从 `langchain_community.graphs` 导入 `TigerGraph`。
+
+```python
+import pyTigerGraph as tg
+
+conn = tg.TigerGraphConnection(host="DATABASE_HOST_HERE", graphname="GRAPH_NAME_HERE", username="USERNAME_HERE", password="PASSWORD_HERE")
+
+### ==== CONFIGURE INQUIRYAI HOST ====
+conn.ai.configureInquiryAIHost("INQUIRYAI_HOST_HERE")
+
+from langchain_community.graphs import TigerGraph
+
+graph = TigerGraph(conn)
+result = graph.query("How many servers are there?")
+print(result)
+```
+

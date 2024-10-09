@@ -1,0 +1,111 @@
+# Couchbase
+
+>[Couchbase](http://couchbase.com/) 是一个屡获殊荣的分布式 NoSQL 云数据库
+> 提供无与伦比的多功能性、性能、可扩展性和经济价值
+> 适用于您所有的云、移动、人工智能和边缘计算应用程序。
+
+## 安装和设置
+
+我们需要安装 `langchain-couchbase` 包。
+
+```bash
+pip install langchain-couchbase
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/couchbase)。
+
+```python
+from langchain_couchbase import CouchbaseVectorStore
+```
+
+## 文档加载器
+
+查看 [使用示例](/docs/integrations/document_loaders/couchbase)。
+
+```python
+from langchain_community.document_loaders.couchbase import CouchbaseLoader
+```
+
+## 大型语言模型缓存
+
+### CouchbaseCache
+使用Couchbase作为提示词和响应的缓存。
+
+查看 [使用示例](/docs/integrations/llm_caching/#couchbase-cache)。
+
+要导入此缓存：
+```python
+from langchain_couchbase.cache import CouchbaseCache
+```
+
+要将此缓存与您的大型语言模型一起使用：
+```python
+from langchain_core.globals import set_llm_cache
+
+cluster = couchbase_cluster_connection_object
+
+set_llm_cache(
+    CouchbaseCache(
+        cluster=cluster,
+        bucket_name=BUCKET_NAME,
+        scope_name=SCOPE_NAME,
+        collection_name=COLLECTION_NAME,
+    )
+)
+```
+
+
+### Couchbase语义缓存
+语义缓存允许用户根据用户输入与之前缓存输入之间的语义相似性来检索缓存的提示词。在底层，它使用Couchbase作为缓存和向量存储。
+Couchbase语义缓存需要定义搜索索引才能工作。请查看[使用示例](/docs/integrations/vectorstores/couchbase)以了解如何设置索引。
+
+查看[使用示例](/docs/integrations/llm_caching/#couchbase-semantic-cache)。
+
+要导入此缓存：
+```python
+from langchain_couchbase.cache import CouchbaseSemanticCache
+```
+
+要将此缓存与您的大型语言模型一起使用：
+```python
+from langchain_core.globals import set_llm_cache
+
+# use any embedding provider...
+from langchain_openai.Embeddings import OpenAIEmbeddings
+
+embeddings = OpenAIEmbeddings()
+cluster = couchbase_cluster_connection_object
+
+set_llm_cache(
+    CouchbaseSemanticCache(
+        cluster=cluster,
+        embedding = embeddings,
+        bucket_name=BUCKET_NAME,
+        scope_name=SCOPE_NAME,
+        collection_name=COLLECTION_NAME,
+        index_name=INDEX_NAME,
+    )
+)
+```
+
+## 聊天消息历史
+使用Couchbase作为您的聊天消息存储。
+
+查看[使用示例](/docs/integrations/memory/couchbase_chat_message_history)。
+
+要在您的应用程序中使用聊天消息历史：
+```python
+from langchain_couchbase.chat_message_histories import CouchbaseChatMessageHistory
+
+message_history = CouchbaseChatMessageHistory(
+    cluster=cluster,
+    bucket_name=BUCKET_NAME,
+    scope_name=SCOPE_NAME,
+    collection_name=COLLECTION_NAME,
+    session_id="test-session",
+)
+
+message_history.add_user_message("hi!")
+```

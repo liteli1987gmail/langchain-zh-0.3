@@ -1,0 +1,28 @@
+# Connery
+
+>[Connery SDK](https://github.com/connery-io/connery-sdk) 是一个 NPM 包，
+> 包含 SDK 和 CLI，旨在开发插件和操作。
+>
+>CLI 自动化了开发过程中的许多事情。SDK
+> 提供了一个 JavaScript API，用于定义插件和操作并将其打包
+> 成为一个插件服务器，具有从元数据生成的标准化 REST API。
+> 插件服务器处理授权、输入验证和日志记录。
+> 这样你就可以专注于操作的逻辑。
+>
+> 查看[Connery SDK文档](https://sdk.connery.io/docs/use-cases/)中的用例和示例
+
+## 工具包
+
+查看[使用示例](/docs/integrations/tools/connery)。
+
+```python
+from langchain_community.agent_toolkits.connery import ConneryToolkit
+```
+
+## 工具
+
+### ConneryAction
+
+```python
+from langchain_community.tools.connery import ConneryService
+```

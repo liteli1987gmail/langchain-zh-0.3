@@ -1,0 +1,28 @@
+# Beam
+
+>[Beam](https://www.beam.cloud/) 是一个云计算平台，允许您在远程服务器上运行代码
+> 在具有GPU的服务器上。
+
+
+## 安装和设置
+
+- [创建一个账户](https://www.beam.cloud/)
+- 使用 `curl https://raw.githubusercontent.com/slai-labs/get-beam/main/get-beam.sh -sSfL | sh` 安装 Beam CLI
+- 使用 `beam configure` 注册API密钥
+- 设置环境变量 (`BEAM_CLIENT_ID`) 和 (`BEAM_CLIENT_SECRET`)
+- 安装 Beam SDK:
+
+```bash
+pip install beam-sdk
+```
+
+
+## 大型语言模型
+
+查看[使用示例](/docs/integrations/llms/beam)。
+
+在[Beam文档](https://docs.beam.cloud/examples/langchain)中查看另一个示例。
+
+```python
+from langchain_community.llms.beam import Beam
+```

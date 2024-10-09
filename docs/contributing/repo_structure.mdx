@@ -1,0 +1,65 @@
+---
+sidebar_position: 0.5
+---
+# 仓库结构
+
+如果您计划为LangChain的代码或文档做贡献，了解仓库的高层结构会很有帮助。
+LangChain的组织形式是一个[单一代码库](https://en.wikipedia.org/wiki/Monorepo)，其中包含多个包。
+
+您可以查看我们的[安装指南](/docs/how_to/installation/)，了解它们是如何结合在一起的。
+您可以查看我们的[安装指南](/docs/how_to/installation/)以了解它们如何结合在一起。
+
+以下是以树形结构可视化的结构：
+
+```text
+.
+├── cookbook # Tutorials and examples
+├── docs # Contains content for the documentation here: https://python.langchain.com/
+├── libs
+│   ├── langchain
+│   │   ├── langchain
+│   │   ├── tests/unit_tests # Unit tests (present in each package not shown for brevity)
+│   │   ├── tests/integration_tests # Integration tests (present in each package not shown for brevity)
+│   ├── community # Third-party integrations
+│   │   ├── langchain-community
+│   ├── core # Base interfaces for key abstractions
+│   │   ├── langchain-core
+│   ├── experimental # Experimental components and chains
+│   │   ├── langchain-experimental
+|   ├── cli # Command line interface
+│   │   ├── langchain-cli
+│   ├── text-splitters
+│   │   ├── langchain-text-splitters
+│   ├── standard-tests
+│   │   ├── langchain-standard-tests
+│   ├── partners
+│       ├── langchain-partner-1
+│       ├── langchain-partner-2
+│       ├── ...
+│
+├── templates # A collection of easily deployable reference architectures for a wide variety of tasks.
+```
+
+根目录还包含以下文件：
+
+* `pyproject.toml`：构建文档和文档、使用手册的依赖项。
+* `Makefile`：包含构建、检查和文档及使用手册快捷方式的文件。
+
+根目录级别还有其他文件，但它们的存在应该是不言自明的。欢迎随意浏览！
+
+## 文档
+
+`/docs`目录包含显示的文档内容
+在 https://python.langchain.com/ 和相关的API参考 https://python.langchain.com/api_reference/langchain/index.html。
+
+请参阅[文档](/docs/contributing/documentation/)指南以了解如何为文档做贡献。
+
+## 代码
+
+ `/libs` 目录包含 LangChain 包的代码。
+
+要了解更多关于如何贡献代码的信息，请参见以下指南：
+
+- [代码](/docs/contributing/code/): 了解如何在 LangChain 代码库中进行开发。
+- [集成](./integrations.mdx): 了解如何为 `langchain-community` 贡献第三方集成或开始一个新的合作伙伴包。
+- [测试](./testing.mdx): 学习如何为这些包编写测试的指南。

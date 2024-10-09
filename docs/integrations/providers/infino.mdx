@@ -1,0 +1,35 @@
+# Infino
+
+>[Infino](https://github.com/infinohq/infino) 是一个开源的可观察性平台，能够同时存储指标和应用日志。
+
+`Infino` 的主要功能包括：
+- **指标跟踪**：捕获大型语言模型处理请求所需的时间、错误、令牌数量以及特定大型语言模型的成本指示。
+- **数据跟踪**：记录和存储每次 LangChain 交互的提示、请求和响应数据。
+- **图形可视化**：生成基本的时间图，描绘请求持续时间、错误发生次数、令牌计数和成本等指标。
+
+## 安装和设置
+
+首先，您需要按照以下方式安装 `infinopy` Python 包：
+
+```bash
+pip install infinopy
+```
+
+如果您已经有一个 `Infino Server` 正在运行，那么您可以继续；但如果
+您没有，请按照以下步骤启动它：
+
+- 确保您已安装 Docker
+- 在终端中运行以下命令：
+    ```
+    docker run --rm --detach --name infino-example -p 3000:3000 infinohq/infino:latest
+    ```
+
+
+
+## 使用 Infino
+
+查看 [使用示例 `InfinoCallbackHandler`](/docs/integrations/callbacks/infino)。
+
+```python
+from langchain.callbacks import InfinoCallbackHandler
+```

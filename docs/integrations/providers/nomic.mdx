@@ -1,0 +1,58 @@
+# Nomic
+
+>[Nomic](https://www.nomic.ai/) 构建工具，使每个人都能与 AI 规模的数据集互动，并在个人计算机上运行 AI 模型。
+>
+>`Nomic` 目前提供两个产品：
+>
+>- `Atlas`: 可视化数据引擎
+>- `GPT4All`: 开源边缘语言模型生态系统
+
+Nomic 集成存在于两个第三方库中：[langchain-nomic](https://pypi.org/project/langchain-nomic/)
+并在 [langchain-community](https://pypi.org/project/langchain-community/) 中。
+
+## 安装
+
+您可以通过以下方式安装它们：
+
+```bash
+pip install -U langchain-nomic
+pip install -U langchain-community
+```
+
+## 大型语言模型
+
+### GPT4All
+
+查看 [使用示例](/docs/integrations/llms/gpt4all)。
+
+```python
+from langchain_community.llms import GPT4All
+```
+
+## 嵌入模型
+
+### NomicEmbeddings
+
+查看 [使用示例](/docs/integrations/text_embedding/nomic)。
+
+```python
+from langchain_nomic import NomicEmbeddings
+```
+
+### GPT4All
+
+查看 [使用示例](/docs/integrations/text_embedding/gpt4all)。
+
+```python
+from langchain_community.embeddings import GPT4AllEmbeddings
+```
+
+## 向量存储
+
+### Atlas
+
+请参阅 [使用示例和安装说明](/docs/integrations/vectorstores/atlas)。
+
+```python
+from langchain_community.vectorstores import AtlasDB
+```

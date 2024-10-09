@@ -1,0 +1,594 @@
+---
+keywords: [azure]
+---
+
+# 微软
+
+与 `Microsoft Azure` 及其他 `Microsoft` 产品相关的所有功能。
+
+## 聊天模型
+
+### Azure OpenAI
+
+>[Microsoft Azure](https://en.wikipedia.org/wiki/Microsoft_Azure)，通常称为 `Azure`，是由 `Microsoft` 运营的云计算平台，提供通过全球数据中心访问、管理和开发应用程序和服务的能力。它提供一系列功能，包括软件即服务 (SaaS)、平台即服务 (PaaS) 和基础设施即服务 (IaaS)。`Microsoft Azure` 支持多种编程语言、工具和框架，包括 Microsoft 特定的和第三方的软件和系统。
+
+>[Azure OpenAI](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/) 是一项 `Azure` 服务，提供来自 `OpenAI` 的强大语言模型，包括 `GPT-3`、`Codex` 和 `嵌入模型` 系列，用于内容生成、摘要、语义搜索和自然语言到代码的翻译。
+
+```bash
+pip install langchain-openai
+```
+
+设置环境变量以访问 `Azure OpenAI` 服务。
+
+```python
+import os
+
+os.environ["AZURE_OPENAI_ENDPOINT"] = "https://<your-endpoint.openai.azure.com/"
+os.environ["AZURE_OPENAI_API_KEY"] = "your AzureOpenAI key"
+```
+
+查看 [使用示例](/docs/integrations/chat/azure_chat_openai)
+
+
+```python
+from langchain_openai import AzureChatOpenAI
+```
+
+### Azure ML 聊天在线端点
+
+有关访问聊天的文档，请查看 [这里](/docs/integrations/chat/azureml_chat_endpoint)
+托管在 [Azure 机器学习](https://azure.microsoft.com/en-us/products/machine-learning/) 的模型。
+
+
+## 大型语言模型
+
+### Azure ML
+
+查看 [使用示例](/docs/integrations/llms/azure_ml)。
+
+```python
+from langchain_community.llms.azureml_endpoint import AzureMLOnlineEndpoint
+```
+
+### Azure OpenAI
+
+查看 [使用示例](/docs/integrations/llms/azure_openai)。
+
+```python
+from langchain_openai import AzureOpenAI
+```
+
+## 嵌入模型
+### Azure OpenAI
+
+查看 [使用示例](/docs/integrations/text_embedding/azureopenai)
+
+```python
+from langchain_openai import AzureOpenAIEmbeddings
+```
+
+## 文档加载器
+
+### Azure AI 数据
+
+> [Azure AI Studio](https://ai.azure.com/) 提供上传数据资产的能力
+> 将数据资产上传到云存储，并从以下来源注册现有数据资产：
+>
+>- `Microsoft OneLake`
+>- `Azure Blob Storage`
+>- `Azure 数据湖 gen 2`
+
+首先，您需要安装几个 Python 包。
+
+```bash
+pip install azureml-fsspec, azure-ai-generative
+```
+
+查看 [使用示例](/docs/integrations/document_loaders/azure_ai_data)。
+
+```python
+from langchain.document_loaders import AzureAIDataLoader
+```
+
+
+### Azure AI 文档智能
+
+>[Azure AI 文档智能](https://aka.ms/doc-intelligence) (以前称为
+> `Azure 表单识别器`) 是一种基于机器学习的
+> 服务，提取文本（包括手写）、表格、文档结构、
+> 和键值对
+> 从数字或扫描的 PDF、图像、Office 和 HTML 文件中。
+>
+> 文档智能支持 `PDF`、`JPEG/JPG`、`PNG`、`BMP`、`TIFF`、`HEIF`、`DOCX`、`XLSX`、`PPTX` 和 `HTML`。
+
+首先，您需要安装一个 Python 包。
+
+```bash
+pip install azure-ai-documentintelligence
+```
+
+请参阅 [使用示例](/docs/integrations/document_loaders/azure_document_intelligence)。
+
+```python
+from langchain.document_loaders import AzureAIDocumentIntelligenceLoader
+```
+
+
+### Azure Blob 存储
+
+> [Azure Blob 存储](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction) 是微软的云对象存储解决方案。Blob 存储经过优化，能够存储大量非结构化数据。非结构化数据是指不遵循特定数据模型或定义的数据，例如文本或二进制数据。
+
+> [Azure 文件](https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction) 提供完全托管的
+> 云中的文件共享，可以通过行业标准的服务器消息块 (`SMB`) 协议访问，
+> 网络文件系统 (`NFS`) 协议和 `Azure Files REST API`。`Azure Files` 基于 `Azure Blob 存储`。
+
+`Azure Blob 存储` 旨在：
+- 直接向浏览器提供图像或文档。
+- 存储文件以供分布式访问。
+- 流式传输视频和音频。
+- 写入日志文件。
+- 存储数据以备份和恢复、灾难恢复以及归档。
+- 存储数据以供本地或Azure托管服务分析。
+
+```bash
+pip install azure-storage-blob
+```
+
+查看[Azure Blob Storage的使用示例](/docs/integrations/document_loaders/azure_blob_storage_container)。
+
+```python
+from langchain_community.document_loaders import AzureBlobStorageContainerLoader
+```
+
+查看[Azure Files的使用示例](/docs/integrations/document_loaders/azure_blob_storage_file)。
+
+```python
+from langchain_community.document_loaders import AzureBlobStorageFileLoader
+```
+
+
+### Microsoft OneDrive
+
+>[Microsoft OneDrive](https://en.wikipedia.org/wiki/OneDrive)（前身为`SkyDrive`）是由微软运营的文件托管服务。
+
+首先，您需要安装一个Python包。
+
+```bash
+pip install o365
+```
+
+查看 [使用示例](/docs/integrations/document_loaders/microsoft_onedrive)。
+
+```python
+from langchain_community.document_loaders import OneDriveLoader
+```
+
+### Microsoft OneDrive 文件
+
+> [Microsoft OneDrive](https://en.wikipedia.org/wiki/OneDrive) (前称 `SkyDrive`) 是由微软运营的文件托管服务。
+
+首先，您需要安装一个 Python 包。
+
+```bash
+pip install o365
+```
+
+```python
+from langchain_community.document_loaders import OneDriveFileLoader
+```
+
+
+### Microsoft Word
+
+> [Microsoft Word](https://www.microsoft.com/en-us/microsoft-365/word) 是由微软开发的文字处理软件。
+
+查看 [使用示例](/docs/integrations/document_loaders/microsoft_word)。
+
+```python
+from langchain_community.document_loaders import UnstructuredWordDocumentLoader
+```
+
+
+### Microsoft Excel
+
+> [Microsoft Excel](https://en.wikipedia.org/wiki/Microsoft_Excel) 是由微软开发的电子表格编辑器。
+> 适用于 Windows、macOS、Android、iOS 和 iPadOS。
+> 它具有计算或运算能力、图形工具、数据透视表和宏编程
+> 语言称为Visual Basic for Applications (VBA)。Excel是Microsoft 365软件套件的一部分。
+
+`UnstructuredExcelLoader`用于加载`Microsoft Excel`文件。该加载器支持`.xlsx`和`.xls`文件。
+页面内容将是Excel文件的原始文本。如果您在`"elements"`模式下使用加载器，将会在文档元数据中以`text_as_html`键提供Excel文件的HTML表示。
+请参见[使用示例](/docs/integrations/document_loaders/microsoft_excel)。
+
+查看[使用示例](/docs/integrations/document_loaders/microsoft_excel)。
+
+```python
+from langchain_community.document_loaders import UnstructuredExcelLoader
+```
+
+
+### Microsoft SharePoint
+
+> [Microsoft SharePoint](https://en.wikipedia.org/wiki/SharePoint)是一个基于网站的协作系统
+> 它使用工作流应用程序、“列表”数据库以及其他网页部分和安全功能，
+> 使商业团队能够共同工作，由Microsoft开发。
+
+查看 [使用示例](/docs/integrations/document_loaders/microsoft_sharepoint)。
+
+```python
+from langchain_community.document_loaders.sharepoint import SharePointLoader
+```
+
+
+### Microsoft PowerPoint
+
+> [Microsoft PowerPoint](https://en.wikipedia.org/wiki/Microsoft_PowerPoint) 是微软的一款演示程序。
+
+查看 [使用示例](/docs/integrations/document_loaders/microsoft_powerpoint)。
+
+```python
+from langchain_community.document_loaders import UnstructuredPowerPointLoader
+```
+
+### Microsoft OneNote
+
+首先，让我们安装依赖项：
+
+```bash
+pip install bs4 msal
+```
+
+查看 [使用示例](/docs/integrations/document_loaders/microsoft_onenote)。
+
+```python
+from langchain_community.document_loaders.onenote import OneNoteLoader
+```
+
+### Playwright URL 加载器
+
+> [Playwright](https://github.com/microsoft/playwright) 是一个开源自动化工具
+> 由 `Microsoft` 开发，允许您以编程方式控制和自动化
+> 网络浏览器。它旨在进行端到端测试、抓取和自动化
+> 在各种网络浏览器上执行任务，例如 `Chromium`、`Firefox` 和 `WebKit`。
+
+
+首先，让我们安装依赖项：
+
+```bash
+pip install playwright unstructured
+```
+
+查看 [使用示例](/docs/integrations/document_loaders/url/#playwright-url-loader)。
+
+```python
+from langchain_community.document_loaders.onenote import OneNoteLoader
+```
+
+## AI 代理记忆系统
+
+[AI 代理](https://learn.microsoft.com/en-us/azure/cosmos-db/ai-agents) 需要强大的记忆系统，支持多模态，提供强大的操作性能，并实现代理记忆的共享和分离。
+
+### Azure Cosmos DB
+AI 代理可以依赖 Azure Cosmos DB 作为统一的 [记忆系统](https://learn.microsoft.com/en-us/azure/cosmos-db/ai-agents#memory-can-make-or-break-agents) 解决方案，享受速度、规模和简单性。该服务成功地 [使 OpenAI 的 ChatGPT 服务](https://www.youtube.com/watch?v=6IIUtEFKJec&t) 能够以高可靠性和低维护动态扩展。由原子记录序列引擎驱动，它是全球首个分布式 [NoSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/distributed-nosql)、[关系型](https://learn.microsoft.com/en-us/azure/cosmos-db/distributed-relational) 和 [向量数据库](https://learn.microsoft.com/en-us/azure/cosmos-db/vector-database) 服务，提供无服务器模式。
+
+以下是两个可用的 Azure Cosmos DB API，可以提供向量存储功能。
+
+### Azure Cosmos DB for MongoDB (vCore)
+
+>[Azure Cosmos DB for MongoDB vCore](https://learn.microsoft.com/en-us/azure/cosmos-db/mongodb/vcore/) 使创建一个完全支持原生 MongoDB 的数据库变得简单。
+> 通过将您的应用程序指向 MongoDB vCore 账户的连接字符串，您可以应用您的 MongoDB 经验，并继续使用您最喜欢的 MongoDB 驱动程序、SDK 和工具。
+> 在 Azure Cosmos DB for MongoDB vCore 中使用向量搜索，可以无缝地将基于 AI 的应用程序与存储在 Azure Cosmos DB 中的数据集成。
+
+#### 安装和设置
+
+请参阅 [详细配置说明](/docs/integrations/vectorstores/azure_cosmos_db)。
+
+我们需要安装 `pymongo` Python 包。
+
+```bash
+pip install pymongo
+```
+
+#### 在 Microsoft Azure 上部署 Azure Cosmos DB
+
+Azure Cosmos DB for MongoDB vCore 为开发人员提供了一个完全托管的 MongoDB 兼容数据库服务，用于构建具有熟悉架构的现代应用程序。
+
+使用 Cosmos DB for MongoDB vCore，开发人员可以享受原生 Azure 集成、低总拥有成本 (TCO) 和熟悉的 vCore 架构的好处，无论是迁移现有应用程序还是构建新应用程序。
+
+[注册](https://azure.microsoft.com/en-us/free/) 免费开始使用。
+
+查看[使用示例](/docs/integrations/vectorstores/azure_cosmos_db)。
+
+```python
+from langchain_community.vectorstores import AzureCosmosDBVectorSearch
+```
+
+### Azure Cosmos DB NoSQL
+
+>[Azure Cosmos DB for NoSQL](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/vector-search) 现在提供预览版的向量索引和搜索功能。
+此功能旨在处理高维向量，实现高效且准确的向量搜索，适用于任何规模。您现在可以将向量
+直接存储在文档中，与您的数据一起。这意味着您数据库中的每个文档不仅可以包含传统的无模式数据，
+还可以包含作为文档其他属性的高维向量。这种数据和向量的共存允许高效的索引和搜索，
+因为向量与它们所代表的数据存储在同一逻辑单元中。这简化了数据管理、AI应用架构以及
+基于向量的操作效率。
+
+#### 安装和设置
+
+请参见[详细配置说明](/docs/integrations/vectorstores/azure_cosmos_db_no_sql)。
+
+我们需要安装 `azure-cosmos` Python 包。
+
+```bash
+pip install azure-cosmos
+```
+
+#### 在 Microsoft Azure 上部署 Azure Cosmos DB
+
+Azure Cosmos DB 为现代应用和智能工作负载提供了解决方案，具有动态和弹性的自动扩展能力，响应非常迅速。它在每个 Azure 区域均可用，并可以自动将数据复制到离用户更近的地方。
+它具有 SLA 保证的低延迟和高可用性。
+
+[注册](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/quickstart-python?pivots=devcontainer-codespace) 免费开始使用。
+
+查看 [使用示例](/docs/integrations/vectorstores/azure_cosmos_db_no_sql)。
+
+```python
+from langchain_community.vectorstores import AzureCosmosDBNoSQLVectorSearch
+```
+
+### Azure PostgreSQL 数据库
+>[Azure PostgreSQL 数据库 - 灵活服务器](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/service-overview) 是基于开源 Postgres 数据库引擎的关系数据库服务。它是一个完全托管的数据库即服务，可以处理具有可预测性能、安全性、高可用性和动态可扩展性的关键任务工作负载。
+
+查看 Azure PostgreSQL 数据库的 [设置说明](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal)。
+
+查看 [使用示例](/docs/integrations/memory/postgres_chat_message_history/)。只需使用来自 Azure 门户的 [连接字符串](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/connect-python?tabs=cmd%2Cpassword#add-authentication-code)。
+
+由于 Azure Database for PostgreSQL 是开源的 Postgres，您可以使用 [LangChain 的 Postgres 支持](/docs/integrations/vectorstores/pgvector/) 连接到 Azure Database for PostgreSQL。
+
+
+### Azure AI 搜索
+
+[Azure AI 搜索](https://learn.microsoft.com/azure/search/search-what-is-azure-search) 是一种云搜索服务
+为开发人员提供基础设施、API 和工具，以进行大规模的向量、关键字和混合
+查询的信息检索。有关使用示例，请参见 [这里](/docs/integrations/vectorstores/azuresearch)。
+
+```python
+from langchain_community.vectorstores.azuresearch import AzureSearch
+```
+
+## 检索器
+
+### Azure AI 搜索
+
+>[Azure AI 搜索](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search)（以前称为 `Azure Search` 或 `Azure Cognitive Search`）是一种云搜索服务，为开发人员提供基础设施、API 和工具，以在 Web、移动和企业应用程序中构建丰富的搜索体验，针对私有的异构内容。
+
+>搜索是任何向用户展示文本的应用程序的基础，常见场景包括目录或文档搜索、在线零售应用程序或对专有内容的数据探索。当您创建搜索服务时，您将使用以下功能：
+>- 用于对包含用户拥有内容的搜索索引进行全文搜索的搜索引擎
+>- 丰富的索引，具有词法分析和可选的AI增强，用于内容提取和转换
+>- 丰富的查询语法，用于文本搜索、模糊搜索、自动补全、地理搜索等
+>- 通过REST API和Azure SDK中的客户端库实现可编程性
+>- 在数据层、机器学习层和AI（AI服务）进行Azure集成
+
+请参阅[设置说明](https://learn.microsoft.com/en-us/azure/search/search-create-service-portal)。
+
+请参阅[使用示例](/docs/integrations/retrievers/azure_ai_search)。
+
+```python
+from langchain_community.retrievers import AzureAISearchRetriever
+```
+
+## 向量存储
+### Azure PostgreSQL 数据库
+>[Azure PostgreSQL 数据库 - 灵活服务器](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/service-overview)是基于开源Postgres数据库引擎的关系数据库服务。它是一个完全托管的数据库即服务，可以处理具有可预测性能、安全性、高可用性和动态可扩展性的关键任务工作负载。
+
+请参阅Azure PostgreSQL数据库的[设置说明](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/quickstart-create-server-portal)。
+
+您需要在数据库中[启用 pgvector 扩展](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/how-to-use-pgvector)才能将 Postgres 用作向量存储。一旦启用扩展，您可以使用[LangChain 中的 PGVector](/docs/integrations/vectorstores/pgvector/)连接到 Azure Database for PostgreSQL。
+
+请参见[使用示例](/docs/integrations/vectorstores/pgvector/)。只需使用来自 Azure 门户的[连接字符串](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/connect-python?tabs=cmd%2Cpassword#add-authentication-code)。
+
+
+## 工具
+
+### Azure 容器应用动态会话
+
+我们需要从 Azure 容器应用服务获取 `POOL_MANAGEMENT_ENDPOINT` 环境变量。
+请参见[此处的说明](/docs/integrations/tools/azure_dynamic_sessions/#setup)。
+
+我们需要安装一个 Python 包。
+
+```bash
+pip install langchain-azure-dynamic-sessions
+```
+
+请参见[使用示例](/docs/integrations/tools/azure_dynamic_sessions)。
+
+```python
+from langchain_azure_dynamic_sessions import SessionsPythonREPLTool
+```
+
+### Bing 搜索
+
+请按照[此处的文档](/docs/integrations/tools/bing_search)获取该工具的详细说明和使用说明。
+
+环境变量 `BING_SUBSCRIPTION_KEY` 和 `BING_SEARCH_URL` 是从 Bing 搜索资源中必需的。
+
+```python
+from langchain_community.tools.bing_search import BingSearchResults
+from langchain_community.utilities import BingSearchAPIWrapper
+
+api_wrapper = BingSearchAPIWrapper()
+tool = BingSearchResults(api_wrapper=api_wrapper)
+```
+
+## 工具包
+
+### Azure AI 服务
+
+我们需要安装几个 Python 包。
+
+```bash
+pip install azure-ai-formrecognizer azure-cognitiveservices-speech azure-ai-vision-imageanalysis
+```
+
+请参见 [使用示例](/docs/integrations/tools/azure_ai_services)。
+
+```python
+from langchain_community.agent_toolkits import azure_ai_services
+```
+
+#### Azure AI 服务单个工具
+
+`azure_ai_services` 工具包包括以下工具：
+
+- 图像分析: [AzureAiServicesImageAnalysisTool](https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.image_analysis.AzureAiServicesImageAnalysisTool.html)
+- 文档智能: [AzureAiServicesDocumentIntelligenceTool](https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.document_intelligence.AzureAiServicesDocumentIntelligenceTool.html)
+- 语音转文本: [AzureAiServicesSpeechToTextTool](https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.speech_to_text.AzureAiServicesSpeechToTextTool.html)
+- 语音合成: [AzureAiServicesTextToSpeechTool](https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.text_to_speech.AzureAiServicesTextToSpeechTool.html)
+- 健康文本分析: [AzureAiServicesTextAnalyticsForHealthTool](https://python.langchain.com/api_reference/community/tools/langchain_community.tools.azure_ai_services.text_analytics_for_health.AzureAiServicesTextAnalyticsForHealthTool.html)
+
+
+### Microsoft Office 365 邮件和日历
+
+我们需要安装 `O365` python 包。
+
+```bash
+pip install O365
+```
+
+
+查看 [使用示例](/docs/integrations/tools/office365)。
+
+```python
+from langchain_community.agent_toolkits import O365Toolkit
+```
+
+#### Office 365 单个工具
+
+您可以使用 Office 365 工具包中的单个工具：
+- `O365CreateDraftMessage`: 用于在 Office 365 中创建草稿邮件的工具
+- `O365SearchEmails`: 用于在 Office 365 中搜索邮件消息的工具
+- `O365SearchEvents`: 用于在 Office 365 中搜索日历事件的工具
+- `O365SendEvent`: 用于在 Office 365 中发送日历事件的工具
+- `O365SendMessage`: 用于在 Office 365 中发送电子邮件的工具
+
+```python
+from langchain_community.tools.office365 import O365CreateDraftMessage
+from langchain_community.tools.office365 import O365SearchEmails
+from langchain_community.tools.office365 import O365SearchEvents
+from langchain_community.tools.office365 import O365SendEvent
+from langchain_community.tools.office365 import O365SendMessage
+```
+
+### Microsoft Azure PowerBI
+
+我们需要安装 `azure-identity` Python 包。
+
+```bash
+pip install azure-identity
+```
+
+查看 [使用示例](/docs/integrations/tools/powerbi)。
+
+```python
+from langchain_community.agent_toolkits import PowerBIToolkit
+from langchain_community.utilities.powerbi import PowerBIDataset
+```
+
+#### PowerBI 单个工具
+
+您可以使用 Azure PowerBI 工具包中的单个工具：
+- `InfoPowerBITool`: 用于获取 PowerBI 数据集元数据的工具
+- `ListPowerBITool`: 用于获取表名的工具
+- `QueryPowerBITool`: 用于查询 PowerBI 数据集的工具
+
+```python
+from langchain_community.tools.powerbi.tool import InfoPowerBITool
+from langchain_community.tools.powerbi.tool import ListPowerBITool
+from langchain_community.tools.powerbi.tool import QueryPowerBITool
+```
+
+
+### PlayWright 浏览器工具包
+
+> [Playwright](https://github.com/microsoft/playwright) 是一个开源自动化工具
+> 由 `Microsoft` 开发，允许您以编程方式控制和自动化
+> 网络浏览器。它旨在进行端到端测试、抓取和自动化
+> 跨各种网络浏览器，如 `Chromium`、`Firefox` 和 `WebKit`。
+
+我们需要安装几个 Python 包。
+
+```bash
+pip install playwright lxml
+```
+
+查看 [使用示例](/docs/integrations/tools/playwright)。
+
+```python
+from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
+```
+
+#### PlayWright 浏览器单独工具
+
+您可以使用 PlayWright 浏览器工具包中的单独工具。
+
+```python
+from langchain_community.tools.playwright import ClickTool
+from langchain_community.tools.playwright import CurrentWebPageTool
+from langchain_community.tools.playwright import ExtractHyperlinksTool
+from langchain_community.tools.playwright import ExtractTextTool
+from langchain_community.tools.playwright import GetElementsTool
+from langchain_community.tools.playwright import NavigateTool
+from langchain_community.tools.playwright import NavigateBackTool
+```
+
+## 图表
+
+### Azure Cosmos DB for Apache Gremlin
+
+我们需要安装一个python包。
+
+```bash
+pip install gremlinpython
+```
+
+查看[使用示例](/docs/integrations/graphs/azure_cosmosdb_gremlin)。
+
+```python
+from langchain_community.graphs import GremlinGraph
+from langchain_community.graphs.graph_document import GraphDocument, Node, Relationship
+```
+
+## 工具
+
+### Bing搜索API
+
+> [Microsoft Bing](https://www.bing.com/)，通常称为`Bing`或`Bing搜索`，
+> 是由`Microsoft`拥有和运营的网络搜索引擎。
+
+查看[使用示例](/docs/integrations/tools/bing_search)。
+
+```python
+from langchain_community.utilities import BingSearchAPIWrapper
+```
+
+## 更多
+
+### Microsoft Presidio
+
+>[Presidio](https://microsoft.github.io/presidio/)（源自拉丁语praesidium‘保护，驻军’）
+> 帮助确保敏感数据得到妥善管理和治理。它提供快速识别和
+> 匿名化模块，用于文本和图像中的私人实体，如信用卡号码、姓名、
+> 位置、社会安全号码、比特币钱包、美国电话号码、财务数据等。
+
+首先，您需要安装几个Python包并下载一个`SpaCy`模型。
+
+```bash
+pip install langchain-experimental openai presidio-analyzer presidio-anonymizer spacy Faker
+python -m spacy download en_core_web_lg
+```
+
+请参见[使用示例](https://python.langchain.com/v0.1/docs/guides/productionization/safety/presidio_data_anonymization)。
+
+```python
+from langchain_experimental.data_anonymizer import PresidioAnonymizer, PresidioReversibleAnonymizer
+```

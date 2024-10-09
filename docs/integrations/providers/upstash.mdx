@@ -1,0 +1,221 @@
+Upstash为开发者提供无服务器数据库和消息传递
+平台，以构建强大的应用程序，而无需担心
+在大规模运行数据库的操作复杂性。
+
+Upstash的一个显著优势是他们的数据库支持HTTP，所有的SDK都使用HTTP。
+这意味着您可以在无服务器平台、边缘或任何不支持TCP连接的平台上运行它。
+
+目前，LangChain有两个Upstash集成可用：
+Upstash Vector作为向量嵌入数据库，Upstash Redis作为缓存和内存存储。
+
+# Upstash Vector
+
+Upstash Vector是一个无服务器向量数据库，可用于存储和查询向量。
+
+## 安装
+
+在 [Upstash 控制台](https://console.upstash.com/vector) 创建一个新的无服务器向量数据库。
+根据您的模型选择首选的距离度量和维度数量。
+
+
+使用 `pip install upstash-vector` 安装 Upstash Vector Python SDK。
+LangChain 中的 Upstash Vector 集成是 Upstash Vector Python SDK 的一个封装。因此需要 `upstash-vector` 包。
+
+## 集成
+
+使用来自 Upstash 控制台的凭据创建一个 `UpstashVectorStore` 对象。
+您还需要传入一个 `Embeddings` 对象，该对象可以将文本转换为向量嵌入。
+
+```python
+from langchain_community.vectorstores.upstash import UpstashVectorStore
+import os
+
+os.environ["UPSTASH_VECTOR_REST_URL"] = "<UPSTASH_VECTOR_REST_URL>"
+os.environ["UPSTASH_VECTOR_REST_TOKEN"] = "<UPSTASH_VECTOR_REST_TOKEN>"
+
+store = UpstashVectorStore(
+    embedding=embeddings
+)
+```
+
+使用 `UpstashVectorStore` 的另一种方式是传递 `embedding=True`。这是一个独特的
+ `UpstashVectorStore` 的特性，得益于 Upstash 向量索引的能力
+具有相关的嵌入模型。在这种配置中，我们想要插入的文档或
+我们想要搜索的查询简单地作为文本发送到 Upstash Vector。在后台，
+Upstash Vector 将这些文本嵌入并使用这些嵌入执行请求。要使用此
+功能，[通过选择模型创建 Upstash Vector 索引](https://upstash.com/docs/vector/features/embeddingmodels#using-a-model)
+并简单地传递 `embedding=True`：
+
+```python
+from langchain_community.vectorstores.upstash import UpstashVectorStore
+import os
+
+os.environ["UPSTASH_VECTOR_REST_URL"] = "<UPSTASH_VECTOR_REST_URL>"
+os.environ["UPSTASH_VECTOR_REST_TOKEN"] = "<UPSTASH_VECTOR_REST_TOKEN>"
+
+store = UpstashVectorStore(
+    embedding=True
+)
+```
+
+请参阅 [Upstash Vector 文档](https://upstash.com/docs/vector/features/embeddingmodels)
+以获取有关嵌入模型的更多详细信息。
+
+## 命名空间
+您可以使用命名空间在索引中对数据进行分区。当您想要查询大量数据并希望对数据进行分区以加快查询速度时，命名空间非常有用。当您使用命名空间时，结果不会进行后期过滤，这将使查询结果更加精确。
+
+```python
+from langchain_community.vectorstores.upstash import UpstashVectorStore
+import os
+
+os.environ["UPSTASH_VECTOR_REST_URL"] = "<UPSTASH_VECTOR_REST_URL>"
+os.environ["UPSTASH_VECTOR_REST_TOKEN"] = "<UPSTASH_VECTOR_REST_TOKEN>"
+
+store = UpstashVectorStore(
+    embedding=embeddings
+    namespace="my_namespace"
+)
+```
+
+### 插入向量
+
+```python
+from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings
+
+loader = TextLoader("../../modules/state_of_the_union.txt")
+documents = loader.load()
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+docs = text_splitter.split_documents(documents)
+
+# Create a new embeddings object
+embeddings = OpenAIEmbeddings()
+
+# Create a new UpstashVectorStore object
+store = UpstashVectorStore(
+    embedding=embeddings
+)
+
+# Insert the document embeddings into the store
+store.add_documents(docs)
+```
+
+在插入文档时，首先使用 `Embeddings` 对象对其进行嵌入。
+
+大多数嵌入模型可以同时嵌入多个文档，因此文档会被批处理并并行嵌入。
+批处理的大小可以使用 `embedding_chunk_size` 参数进行控制。
+
+嵌入的向量随后存储在 Upstash 向量数据库中。当它们被发送时，多个向量会被批量处理以减少 HTTP 请求的数量。
+批处理的大小可以使用 `batch_size` 参数进行控制。Upstash 向量在免费层中每批次限制为 1000 个向量。
+
+```python
+store.add_documents(
+    documents,
+    batch_size=100,
+    embedding_chunk_size=200
+)
+```
+
+### 查询向量
+
+可以使用文本查询或另一个向量来查询向量。
+
+返回的值是 Document 对象的列表。
+
+```python
+result = store.similarity_search(
+    "The United States of America",
+    k=5
+)
+```
+
+或使用向量：
+
+```python
+vector = embeddings.embed_query("Hello world")
+
+result = store.similarity_search_by_vector(
+    vector,
+    k=5
+)
+```
+
+在搜索时，您还可以利用 `filter` 参数，这将允许您按元数据进行过滤：
+
+```python
+result = store.similarity_search(
+    "The United States of America",
+    k=5,
+    filter="type = 'country'"
+)
+```
+
+有关元数据过滤的更多详细信息，请参见 [Upstash Vector 文档](https://upstash.com/docs/vector/features/filtering)
+。
+
+### 删除向量
+
+可以通过它们的 ID 删除向量。
+
+```python
+store.delete(["id1", "id2"])
+```
+
+### 获取存储信息
+
+您可以使用 info 函数获取有关您的数据库的信息，例如距离度量维度。
+
+当插入发生时，数据库会进行索引。在此期间，无法查询新的向量。`pendingVectorCount` 表示当前正在被索引的向量数量。
+
+```python
+info = store.info()
+print(info)
+
+# Output:
+# {'vectorCount': 44, 'pendingVectorCount': 0, 'indexSize': 2642412, 'dimension': 1536, 'similarityFunction': 'COSINE'}
+```
+
+# Upstash Redis
+
+本页面介绍如何将 [Upstash Redis](https://upstash.com/redis) 与 LangChain 一起使用。
+
+## 安装和设置
+- Upstash Redis Python SDK 可以通过 `pip install upstash-redis` 安装
+- 可以在 [Upstash 控制台](https://console.upstash.com) 创建一个全球分布、低延迟和高可用性的数据库
+
+
+## 集成
+所有 Upstash-LangChain 集成都基于 `upstash-redis` Python SDK，作为 LangChain 的封装。
+该 SDK 通过提供来自控制台的 UPSTASH_REDIS_REST_URL 和 UPSTASH_REDIS_REST_TOKEN 参数来利用 Upstash Redis 数据库。
+
+
+### 缓存
+
+[Upstash Redis](https://upstash.com/redis) 可以用作 LLM 提示和响应的缓存。
+
+要导入此缓存：
+```python
+from langchain.cache import UpstashRedisCache
+```
+
+与您的大型语言模型一起使用：
+```python
+import langchain
+from upstash_redis import Redis
+
+URL = "<UPSTASH_REDIS_REST_URL>"
+TOKEN = "<UPSTASH_REDIS_REST_TOKEN>"
+
+langchain.llm_cache = UpstashRedisCache(redis_=Redis(url=URL, token=TOKEN))
+```
+
+### 内存
+
+查看[使用示例](/docs/integrations/memory/upstash_redis_chat_message_history)。
+
+```python
+from langchain_community.chat_message_histories import (
+    UpstashRedisChatMessageHistory,
+)
+```

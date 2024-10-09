@@ -1,0 +1,21 @@
+# Ontotext GraphDB
+
+>[Ontotext GraphDB](https://graphdb.ontotext.com/) 是一个符合RDF和SPARQL的图数据库和知识发现工具。
+
+## 依赖
+
+使用以下命令安装[rdflib](https://github.com/RDFLib/rdflib)包
+```bash
+pip install rdflib==7.0.0
+```
+
+## 图形问答链
+
+将您的GraphDB数据库与聊天模型连接，以获取数据洞察。
+
+请查看笔记本示例 [这里](/docs/integrations/graphs/ontotext)。
+
+```python
+from langchain_community.graphs import OntotextGraphDBGraph
+from langchain.chains import OntotextGraphDBQAChain
+```

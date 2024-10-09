@@ -1,0 +1,53 @@
+# Motherduck
+
+>[Motherduck](https://motherduck.com/) 是一个托管的 DuckDB 云服务。
+
+## 安装和设置
+
+首先，您需要安装 `duckdb` Python 包。
+
+```bash
+pip install duckdb
+```
+
+您还需要在 [Motherduck](https://motherduck.com/) 注册一个账户。
+
+之后，您应该设置一个连接字符串 - 我们主要通过 SQLAlchemy 与 Motherduck 集成。
+连接字符串可能是以下形式：
+
+```
+token="..."
+
+conn_str = f"duckdb:///md:{token}@my_db"
+```
+
+## SQLChain
+
+您可以使用 SQLChain 以自然语言查询您在 Motherduck 实例中的数据。
+
+```
+from langchain_openai import OpenAI
+from langchain_community.utilities import SQLDatabase
+from langchain_experimental.sql import SQLDatabaseChain
+db = SQLDatabase.from_uri(conn_str)
+db_chain = SQLDatabaseChain.from_llm(OpenAI(temperature=0), db, verbose=True)
+```
+
+在这里，请参阅 [SQL Chain](/docs/how_to#qa-over-sql--csv) 文档以了解如何使用。
+
+
+## LLMCache
+
+您还可以轻松使用 Motherduck 来缓存 LLM 请求。
+这同样是通过 SQLAlchemy 包装器完成的。
+
+```
+import sqlalchemy
+from langchain.globals import set_llm_cache
+eng = sqlalchemy.create_engine(conn_str)
+set_llm_cache(SQLAlchemyCache(engine=eng))
+```
+
+在这里，请参阅 [LLM Caching](/docs/integrations/llm_caching) 文档以了解如何使用。
+
+

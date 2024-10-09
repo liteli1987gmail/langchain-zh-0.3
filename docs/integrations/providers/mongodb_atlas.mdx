@@ -1,0 +1,82 @@
+# MongoDB Atlas
+
+> [MongoDB Atlas](https://www.mongodb.com/docs/atlas/) 是一个完全托管的云
+> 数据库，适用于 AWS、Azure 和 GCP。它现在支持原生
+> 在 MongoDB 文档数据上的向量搜索。
+
+## 安装和设置
+
+请参阅 [详细配置说明](/docs/integrations/vectorstores/mongodb_atlas)。
+
+我们需要安装 `langchain-mongodb` Python 包。
+
+```bash
+pip install langchain-mongodb
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/mongodb_atlas)。
+
+```python
+from langchain_mongodb import MongoDBAtlasVectorSearch
+```
+
+
+## 大型语言模型缓存
+
+### MongoDB缓存
+一个在MongoDB中存储简单缓存的抽象。这不使用语义缓存，也不需要在生成之前对集合进行索引。
+
+要导入此缓存：
+```python
+from langchain_mongodb.cache import MongoDBCache
+```
+
+要将此缓存与您的大型语言模型一起使用：
+```python
+from langchain_core.globals import set_llm_cache
+
+# use any embedding provider...
+from tests.integration_tests.vectorstores.fake_embeddings import FakeEmbeddings
+
+mongodb_atlas_uri = "<YOUR_CONNECTION_STRING>"
+COLLECTION_NAME="<YOUR_CACHE_COLLECTION_NAME>"
+DATABASE_NAME="<YOUR_DATABASE_NAME>"
+
+set_llm_cache(MongoDBCache(
+    connection_string=mongodb_atlas_uri,
+    collection_name=COLLECTION_NAME,
+    database_name=DATABASE_NAME,
+))
+```
+
+
+### MongoDBAtlas语义缓存
+语义缓存允许用户根据用户输入与先前缓存结果之间的语义相似性来检索缓存的提示。在底层，它将MongoDBAtlas作为缓存和向量存储结合在一起。
+MongoDBAtlas语义缓存继承自 `MongoDBAtlasVectorSearch`，并需要定义一个Atlas向量搜索索引才能工作。请查看 [使用示例](/docs/integrations/vectorstores/mongodb_atlas) 了解如何设置索引。
+
+要导入此缓存：
+```python
+from langchain_mongodb.cache import MongoDBAtlasSemanticCache
+```
+
+要将此缓存与您的大型语言模型一起使用：
+```python
+from langchain_core.globals import set_llm_cache
+
+# use any embedding provider...
+from tests.integration_tests.vectorstores.fake_embeddings import FakeEmbeddings
+
+mongodb_atlas_uri = "<YOUR_CONNECTION_STRING>"
+COLLECTION_NAME="<YOUR_CACHE_COLLECTION_NAME>"
+DATABASE_NAME="<YOUR_DATABASE_NAME>"
+
+set_llm_cache(MongoDBAtlasSemanticCache(
+    embedding=FakeEmbeddings(),
+    connection_string=mongodb_atlas_uri,
+    collection_name=COLLECTION_NAME,
+    database_name=DATABASE_NAME,
+))
+```
+``

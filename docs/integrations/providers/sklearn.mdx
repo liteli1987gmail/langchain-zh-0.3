@@ -1,0 +1,35 @@
+# scikit-learn
+
+> [scikit-learn](https://scikit-learn.org/stable/) 是一个开源的机器学习算法集合，
+> 包括一些 [k 最近邻](https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestNeighbors.html) 的实现。`SKLearnVectorStore` 封装了这个实现，并增加了将向量存储持久化为 json、bson（二进制 json）或 Apache Parquet 格式的可能性。
+
+## 安装和设置
+
+- 使用 `pip install scikit-learn` 安装 Python 包
+
+
+## 向量存储
+
+`SKLearnVectorStore` 提供了一个简单的封装，围绕最近邻实现，
+scikit-learn 包，允许您将其用作向量存储。
+
+要导入这个向量存储：
+
+```python
+from langchain_community.vectorstores import SKLearnVectorStore
+```
+
+有关 SKLearnVectorStore 包装器的更详细操作，请参见 [此笔记本](/docs/integrations/vectorstores/sklearn)。
+
+
+## 检索器
+
+`支持向量机 (SVM)` 是用于分类、回归和异常检测的监督学习方法。
+请参见 [用例示例](/docs/integrations/retrievers/svm)。
+
+查看[使用示例](/docs/integrations/retrievers/svm)。
+
+```python
+from langchain_community.retrievers import SVMRetriever
+```
+

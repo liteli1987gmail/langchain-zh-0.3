@@ -1,0 +1,33 @@
+# AskNews
+
+[AskNews](https://asknews.app/) 通过最新的全球或历史新闻增强语言模型
+每天处理和索引超过300,000篇文章，提供优化提示的响应
+通过低延迟的端点，并确保其新闻报道的透明性和多样性。
+
+## 安装和设置
+
+首先，您需要安装 `asknews` python 包。
+
+```bash
+pip install asknews
+```
+
+您还需要设置我们的 AskNews API 凭据，可以在
+ [AskNews 控制台](https://my.asknews.app/) 生成。
+
+
+## 检索器
+
+查看 [使用示例](/docs/integrations/retrievers/asknews)。
+
+```python
+from langchain_community.retrievers import AskNewsRetriever
+```
+
+## 工具
+
+查看 [使用示例](/docs/integrations/tools/asknews)。
+
+```python
+from langchain_community.tools.asknews import AskNewsSearch
+```

@@ -1,0 +1,182 @@
+# Vectara
+
+>[Vectara](https://vectara.com/) 提供一个可信的生成式人工智能平台，使组织能够快速创建类似ChatGPT的体验（一个AI助手）
+> 该体验基于他们拥有的数据、文档和知识（从技术上讲，它是增强检索生成即服务）。
+
+**Vectara 概述:**
+`Vectara` 是增强检索即服务，提供所有增强检索的组件，背后有一个易于使用的API，包括：
+1. 从文件中提取文本的方法（PDF、PPT、DOCX等）
+2. 基于机器学习的分块，提供最先进的性能。
+3. [Boomerang](https://vectara.com/how-boomerang-takes-retrieval-augmented-generation-to-the-next-level-via-grounded-generation/) 嵌入模型。
+4. 自有的内部向量数据库，用于存储文本块和嵌入向量。
+5. 一个查询服务，自动将查询编码为嵌入，并检索最相关的文本片段
+(包括对[混合搜索](https://docs.vectara.com/docs/api-reference/search-apis/lexical-matching)的支持和
+[MMR](https://vectara.com/get-diverse-results-and-comprehensive-summaries-with-vectaras-mmr-reranker/))
+7. 一个用于创建[生成摘要](https://docs.vectara.com/docs/learn/grounded-generation/grounded-generation-overview)的LLM，基于检索到的文档（上下文），包括引用。
+
+更多信息：
+- [文档](https://docs.vectara.com/docs/)
+- [API 演示](https://docs.vectara.com/docs/rest-api/)
+- [快速入门](https://docs.vectara.com/docs/quickstart)
+
+## 安装和设置
+
+要在LangChain中使用`Vectara`，无需特殊安装步骤。
+要开始使用，请[注册](https://vectara.com/integrations/langchain)一个免费的Vectara账户（如果您还没有的话），
+并按照[快速入门](https://docs.vectara.com/docs/quickstart)指南创建一个语料库和API密钥。
+一旦你拥有这些，你可以将它们作为参数提供给Vectara `vectorstore`，或者将它们设置为环境变量。
+
+- export `VECTARA_CUSTOMER_ID`="你的客户ID"
+- export `VECTARA_CORPUS_ID`="你的语料库ID"
+- export `VECTARA_API_KEY`="你的-vectara-api-密钥"
+
+## Vectara作为向量存储
+
+在Vectara平台周围存在一个包装器，允许你将其用作LangChain中的`vectorstore`：
+
+要导入这个向量存储：
+```python
+from langchain_community.vectorstores import Vectara
+```
+
+要创建一个 Vectara 向量存储的实例：
+```python
+vectara = Vectara(
+    vectara_customer_id=customer_id, 
+    vectara_corpus_id=corpus_id, 
+    vectara_api_key=api_key
+)
+```
+`customer_id`、`corpus_id` 和 `api_key` 是可选的，如果未提供，将从
+环境变量 `VECTARA_CUSTOMER_ID`、`VECTARA_CORPUS_ID` 和 `VECTARA_API_KEY` 中读取，分别。
+
+### 添加文本或文件
+
+在您拥有向量存储后，可以根据标准 `VectorStore` 接口使用 `add_texts` 或 `add_documents`，例如：
+
+```python
+vectara.add_texts(["to be or not to be", "that is the question"])
+```
+
+由于 Vectara 在平台上支持文件上传，我们还添加了直接上传文件（PDF、TXT、HTML、PPT、DOC 等）的能力。
+使用此方法时，每个文件直接上传到 Vectara 后端，在那里进行处理和最佳分块，因此您不必使用 LangChain 文档加载器或分块机制。
+
+作为一个例子：
+
+```python
+vectara.add_files(["path/to/file1.pdf", "path/to/file2.pdf",...])
+```
+
+当然，您不必添加任何数据，而是可以直接连接到一个现有的 Vectara 语料库，其中可能已经索引了数据。
+
+### 查询向量存储
+
+要查询 Vectara 向量存储，可以使用 `similarity_search` 方法（或 `similarity_search_with_score`），该方法接受一个查询字符串并返回结果列表：
+```python
+results = vectara.similarity_search_with_score("what is LangChain?")
+```
+结果以相关文档的列表返回，并附带每个文档的相关性评分。
+
+在这种情况下，我们使用了默认的检索参数，但您也可以在 `similarity_search` 或 `similarity_search_with_score` 中指定以下附加参数：
+- `k`: 要返回的结果数量（默认为 5）
+- `lambda_val`: 混合搜索的 [词汇匹配](https://docs.vectara.com/docs/api-reference/search-apis/lexical-matching) 因子（默认为 0.025）
+- `filter`: 应用于结果的 [过滤器](https://docs.vectara.com/docs/common-use-cases/filtering-by-metadata/filter-overview)（默认为 None）
+- `n_sentence_context`: 返回结果时，实际匹配段前后要包含的句子数量。默认为 2。
+- `rerank_config`: 可用于指定结果的重排序器
+- `reranker`: mmr, rerank_multilingual_v1 或 none。请注意，“rerank_multilingual_v1”是仅限 Scale 的功能
+- `rerank_k`: 用于重排序的结果数量
+- `mmr_diversity_bias`: 0 = 无多样性, 1 = 完全多样性。这是MMR公式中的lambda参数，范围为0...1
+
+要获取没有相关性得分的结果，您可以简单地使用'similarity_search'方法：
+```python   
+results = vectara.similarity_search("what is LangChain?")
+```
+
+## Vectara用于检索增强生成 (RAG)
+
+Vectara提供了完整的RAG管道，包括生成摘要。要将其用作完整的RAG解决方案，您可以使用`as_rag`方法。
+在`VectaraQueryConfig`对象中可以指定一些额外的参数来控制检索和摘要：
+* k: 返回的结果数量
+* lambda_val: 混合搜索的词汇匹配因子
+* summary_config（可选）：可用于请求RAG中的LLM摘要
+- is_enabled: 真或假
+- max_results: 用于摘要生成的结果数量
+- response_lang: 响应摘要的语言，采用 ISO 639-2 格式（例如 'en', 'fr', 'de' 等）
+* rerank_config (可选): 可用于指定结果的 Vectara 重新排序器
+- reranker: mmr, rerank_multilingual_v1 或 none
+- rerank_k: 用于重新排序的结果数量
+- mmr_diversity_bias: 0 = 无多样性, 1 = 完全多样性。
+这是 MMR 公式中的 lambda 参数，范围为 0...1
+
+例如：
+
+```python
+summary_config = SummaryConfig(is_enabled=True, max_results=7, response_lang='eng')
+rerank_config = RerankConfig(reranker="mmr", rerank_k=50, mmr_diversity_bias=0.2)
+config = VectaraQueryConfig(k=10, lambda_val=0.005, rerank_config=rerank_config, summary_config=summary_config)
+```
+然后您可以使用 `as_rag` 方法创建 RAG 流水线：
+
+```python
+query_str = "what did Biden say?"
+
+rag = vectara.as_rag(config)
+rag.invoke(query_str)['answer']
+```
+
+ `as_rag` 方法返回一个 `VectaraRAG` 对象，该对象的行为与任何 LangChain 可运行对象相同，包括 `invoke` 或 `stream` 方法。
+
+## Vectara 聊天
+
+RAG 功能可以用于创建聊天机器人。例如，您可以创建一个简单的聊天机器人来响应用户输入：
+
+```python
+summary_config = SummaryConfig(is_enabled=True, max_results=7, response_lang='eng')
+rerank_config = RerankConfig(reranker="mmr", rerank_k=50, mmr_diversity_bias=0.2)
+config = VectaraQueryConfig(k=10, lambda_val=0.005, rerank_config=rerank_config, summary_config=summary_config)
+
+query_str = "what did Biden say?"
+bot = vectara.as_chat(config)
+bot.invoke(query_str)['answer']
+```
+
+主要区别在于：使用 `as_chat` 时，Vectara 会在内部跟踪聊天历史，并根据完整的聊天历史来调整每个响应。
+不需要将该历史记录保存在 LangChain 本地，因为 Vectara 会在内部管理它。
+
+## Vectara 作为 LangChain 检索器仅使用
+
+如果您只想将 Vectara 用作检索器，可以使用 `as_retriever` 方法，该方法返回一个 `VectaraRetriever` 对象。
+```python
+retriever = vectara.as_retriever(config=config)
+retriever.invoke(query_str)
+```
+
+与 as_rag 一样，您提供一个 `VectaraQueryConfig` 对象来控制检索参数。
+在大多数情况下，您不会启用 summary_config，但它作为向后兼容的选项保留。
+如果未请求摘要，响应将是相关文档的列表，每个文档都有一个相关性评分。
+如果请求摘要，响应将是之前的相关文档列表，加上一个包含生成摘要的额外文档。
+
+## 幻觉检测分数
+
+Vectara 创建了 [HHEM](https://huggingface.co/vectara/hallucination_evaluation_model) - 一个开源模型，可用于评估 RAG 响应的事实一致性。
+作为 Vectara RAG 的一部分，
+这会自动包含在 RAG 流水线的输出中。
+
+```python
+summary_config = SummaryConfig(is_enabled=True, max_results=7, response_lang='eng')
+rerank_config = RerankConfig(reranker="mmr", rerank_k=50, mmr_diversity_bias=0.2)
+config = VectaraQueryConfig(k=10, lambda_val=0.005, rerank_config=rerank_config, summary_config=summary_config)
+
+rag = vectara.as_rag(config)
+resp = rag.invoke(query_str)
+print(resp['answer'])
+print(f"Vectara FCS = {resp['fcs']}")
+```
+
+## 示例笔记本
+
+有关使用 Vectara 与 LangChain 的更详细示例，请参见以下示例笔记本：
+* [这个笔记本](/docs/integrations/vectorstores/vectara) 显示了如何使用 Vectara：完整的 RAG 或仅作为检索器。
+* [这个笔记本](/docs/integrations/retrievers/self_query/vectara_self_query) 显示了 Vectara 的自查询功能。
+* [这个笔记本](/docs/integrations/providers/vectara/vectara_chat) 显示了如何使用 LangChain 和 Vectara 构建聊天机器人。
+

@@ -1,0 +1,36 @@
+# Xata
+
+> [Xata](https://xata.io) 是一个无服务器数据平台，基于 `PostgreSQL`。
+> 它提供了一个用于与数据库交互的 Python SDK，以及一个
+> 用于管理数据的用户界面。
+> `Xata` 具有原生向量类型，可以添加到任何表中，并且
+> 支持相似性搜索。LangChain 直接将向量插入到 `Xata`，
+> 并查询给定向量的最近邻，以便您可以
+> 使用所有与 `Xata` 兼容的 LangChain 嵌入集成。
+
+
+## 安装和设置
+
+
+我们需要安装 `xata` Python 包。
+
+```bash
+pip install xata==1.0.0a7 
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/xata)。
+
+```python
+from langchain_community.vectorstores import XataVectorStore
+```
+
+## 内存
+
+查看 [使用示例](/docs/integrations/memory/xata_chat_message_history)。
+
+```python
+from langchain_community.chat_message_histories import XataChatMessageHistory
+```
+

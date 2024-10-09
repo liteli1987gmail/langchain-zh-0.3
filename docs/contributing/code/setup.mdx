@@ -1,0 +1,213 @@
+# 设置
+
+本指南介绍如何在本地运行该代码库并提交您的第一段代码。
+有关[开发容器](https://containers.dev/)，请参见[.devcontainer 文件夹](https://github.com/langchain-ai/langchain/tree/master/.devcontainer)。
+
+## 依赖管理：Poetry 和其他环境/依赖管理工具
+
+该项目使用[Poetry](https://python-poetry.org/) v1.7.1+ 作为依赖管理工具。
+
+❗注意：*在安装 Poetry 之前*，如果您使用 `Conda`，请创建并激活一个新的 Conda 环境（例如 `conda create -n langchain python=3.9`）
+
+安装 Poetry：**[有关如何安装的文档](https://python-poetry.org/docs/#installation)**。
+
+❗注意：如果您使用 `Conda` 或 `Pyenv` 作为您的环境/包管理工具，在安装 Poetry 后，
+告诉 Poetry 使用虚拟环境的 Python 环境（`poetry config virtualenvs.prefer-active-python true`）
+
+## 不同的包
+
+该仓库包含多个包：
+- `langchain-core`: 关键抽象的基础接口以及将它们组合成链的逻辑（LangChain表达式）。
+- `langchain-community`: 各种组件的第三方集成。
+- `langchain`: 组成您应用程序认知架构的链、代理和检索逻辑。
+- `langchain-experimental`: 处于实验阶段的组件和链，可能是因为这些技术是新颖的并仍在测试中，或者它们需要给LLM更多的访问权限，而这在大多数生产系统中是不可能的。
+- 合作伙伴集成：在`libs/partners`中的合作伙伴包，独立版本控制。
+
+每个包都有自己的开发环境。文档从顶层makefile运行，但开发
+分为单独的测试和发布流程。
+
+对于这个快速入门，请从langchain-community开始：
+
+```bash
+cd libs/community
+```
+
+## 本地开发依赖
+
+安装 langchain-community 开发要求（用于运行 langchain、运行示例、代码检查、格式化、测试和覆盖）：
+
+```bash
+poetry install --with lint,typing,test,test_integration
+```
+
+然后验证依赖安装：
+
+```bash
+make test
+```
+
+如果在安装过程中收到 `debugpy` 的 `WheelFileValidationError`，请确保您正在运行
+Poetry v1.6.1+。此错误在旧版本的 Poetry（例如 1.4.1）中存在，并已在新版本中解决。
+如果您在 v1.6.1+ 上仍然看到此错误，您也可以尝试禁用“现代安装”
+（`poetry config installer.modern-installation false`）并重新安装依赖。
+有关更多详细信息，请参见 [此 `debugpy` 问题](https://github.com/microsoft/debugpy/issues/1246)。
+
+## 测试
+
+**注意：** 在 `langchain`、`langchain-community` 和 `langchain-experimental` 中，一些测试依赖是可选的。请参见以下关于可选依赖的部分。
+
+单元测试覆盖不需要调用外部API的模块逻辑。
+如果您添加了新逻辑，请添加单元测试。
+
+要运行单元测试：
+
+```bash
+make test
+```
+
+要在Docker中运行单元测试：
+
+```bash
+make docker_tests
+```
+
+还有[集成测试和代码覆盖率](/docs/contributing/testing/)可用。
+
+### 仅开发 langchain_core 或 langchain_community
+
+如果您仅开发 `langchain_core` 或 `langchain_community`，您可以简单地安装相应项目的依赖项并运行测试：
+
+```bash
+cd libs/core
+poetry install --with test
+make test
+```
+
+或者：
+
+```bash
+cd libs/community
+poetry install --with test
+make test
+```
+
+## 格式化和代码检查
+
+在提交PR之前，请在本地运行这些；CI系统也会进行检查。
+
+### 代码格式化
+
+本项目的格式化通过 [ruff](https://docs.astral.sh/ruff/rules/) 完成。
+
+要对文档、使用手册和模板进行格式化，请运行：
+
+```bash
+make format
+```
+
+要对库进行格式化，请在相关库目录中运行相同的命令：
+
+```bash
+cd libs/{LIBRARY}
+make format
+```
+
+此外，您可以使用 format_diff 命令仅对与主分支相比在当前分支中已修改的文件运行格式化：
+
+```bash
+make format_diff
+```
+
+这在您对项目的某个子集进行了更改并希望确保您的更改格式正确而不影响其余代码库时特别有用。
+
+#### 代码检查
+
+本项目的代码检查通过 [ruff](https://docs.astral.sh/ruff/rules/) 和 [mypy](http://mypy-lang.org/) 的组合完成。
+
+要对文档、使用手册和模板进行代码检查，请运行：
+
+```bash
+make lint
+```
+
+要对库进行代码检查，请在相关库目录中运行相同的命令：
+
+```bash
+cd libs/{LIBRARY}
+make lint
+```
+
+此外，您可以使用 lint_diff 命令仅对与主分支相比在当前分支中已修改的文件运行 linter：
+
+```bash
+make lint_diff
+```
+
+当您仅对项目的某些部分进行了更改，并希望确保您的更改符合 linting 标准而无需检查整个代码库时，这非常有帮助。
+
+我们认识到 linting 可能会很烦人 - 如果您不想这样做，请联系项目维护者，他们可以帮助您。我们不希望这成为良好代码贡献的障碍。
+
+### 拼写检查
+
+该项目的拼写检查通过 [codespell](https://github.com/codespell-project/codespell) 完成。
+请注意，`codespell` 查找常见的拼写错误，因此可能会出现误报（拼写正确但很少使用）和漏报（未找到拼写错误）单词。
+
+要检查该项目的拼写：
+
+```bash
+make spell_check
+```
+
+要就地修复拼写：
+
+```bash
+make spell_fix
+```
+
+如果 codespell 错误地标记了一个单词，您可以通过将其添加到 `pyproject.toml` 文件中的 codespell 配置中来跳过该单词的拼写检查。
+
+```python
+[tool.codespell]
+...
+# Add here:
+ignore-words-list = 'momento,collison,ned,foor,reworkd,parth,whats,aapply,mysogyny,unsecure'
+```
+
+## 使用可选依赖项
+
+`langchain`、`langchain-community` 和 `langchain-experimental` 依赖可选依赖项以保持这些包的轻量级。
+
+`langchain-core` 和第三方库 **不使用** 这种可选依赖项。
+
+您会注意到，当您在下面添加可选依赖项时，`pyproject.toml` 和 `poetry.lock` **不会** 被修改。
+
+如果您要向 LangChain 添加新依赖项，请假设它将是一个可选依赖项，并且
+大多数用户不会安装它。
+
+未安装该依赖项的用户应该能够 **导入** 您的代码而没有
+任何副作用（没有警告，没有错误，没有异常）。
+
+要将依赖项引入库，请执行以下操作：
+
+1. 打开 extended_testing_deps.txt 并添加依赖项
+2. 添加一个单元测试，至少尝试导入新代码。理想情况下，单元
+测试使用轻量级的夹具来测试代码的逻辑。
+3. 请为任何需要依赖的单元测试使用 `@pytest.mark.requires(package_name)` 装饰器。
+
+## 添加 Jupyter Notebook
+
+如果您正在添加 Jupyter Notebook 示例，您需要安装可选的 `dev` 依赖。
+
+安装 dev 依赖：
+
+```bash
+poetry install --with dev
+```
+
+启动一个 notebook：
+
+```bash
+poetry run jupyter notebook
+```
+
+当您运行 `poetry install` 时，`langchain` 包会作为可编辑的形式安装在虚拟环境中，因此您的新逻辑可以导入到 notebook 中。

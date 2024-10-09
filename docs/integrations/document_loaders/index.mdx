@@ -1,0 +1,73 @@
+---
+sidebar_position: 0
+sidebar_class_name: hidden
+---
+
+# 文档加载器
+
+import { CategoryTable, IndexTable } from "@theme/FeatureTables";
+
+文档加载器将数据加载到标准的LangChain文档格式中。
+
+每个文档加载器都有其特定的参数，但它们都可以通过.load方法以相同的方式调用。
+一个示例用例如下：
+
+```python
+from langchain_community.document_loaders.csv_loader import CSVLoader
+
+loader = CSVLoader(
+    ...  # <-- Integration specific parameters here
+)
+data = loader.load()
+```
+
+## 网页
+
+以下文档加载器允许您加载网页。
+
+请参阅此指南以获取起点：[如何：加载网页](/docs/how_to/document_loader_web)。
+
+<CategoryTable category="webpage_loaders" />
+
+## PDF
+
+以下文档加载器允许您加载PDF文档。
+
+请参阅此指南以获取起点：[如何：加载PDF文件](/docs/how_to/document_loader_pdf)。
+
+<CategoryTable category="pdf_loaders" />
+
+## 云服务提供商
+
+以下文档加载器允许您从您喜欢的云服务提供商加载文档。
+
+<CategoryTable category="cloud_provider_loaders"/>
+
+## 社交平台
+
+以下文档加载器允许您从不同的社交媒体平台加载文档。
+
+<CategoryTable category="social_loaders"/>
+
+## 消息服务
+
+以下文档加载器允许您从不同的消息平台加载数据。
+
+<CategoryTable category="messaging_loaders"/>
+
+## 生产力工具
+
+以下文档加载器允许您从常用的生产力工具加载数据。
+
+<CategoryTable category="productivity_loaders"/>
+
+## 常见文件类型
+
+以下文档加载器允许您从常见数据格式加载数据。
+
+<CategoryTable category="common_loaders" />
+
+
+## 所有文档加载器
+
+<IndexTable />

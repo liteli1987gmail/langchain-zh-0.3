@@ -1,0 +1,27 @@
+# Gradient.ai
+
+>[梯度](https://gradient.ai/) 允许通过简单的Web API对大型语言模型进行微调和获取补全。
+
+## 安装和设置
+- 安装Python SDK :
+```bash
+pip install gradientai
+```
+获取一个[Gradient访问令牌和工作区](https://gradient.ai/)并将其设置为环境变量（`Gradient_ACCESS_TOKEN`）和（`GRADIENT_WORKSPACE_ID`）
+
+## 大型语言模型
+
+存在一个Gradient大型语言模型包装器，您可以通过以下方式访问
+查看[使用示例](/docs/integrations/llms/gradient)。
+
+```python
+from langchain_community.llms import GradientLLM
+```
+
+## 文本嵌入模型
+
+存在一个Gradient嵌入模型，您可以通过以下方式访问
+```python
+from langchain_community.embeddings import GradientEmbeddings
+```
+有关此内容的更详细说明，请参见[此笔记本](/docs/integrations/text_embedding/gradient)

@@ -1,0 +1,21 @@
+# OpenSearch
+
+本页面介绍如何在LangChain中使用OpenSearch生态系统。
+它分为两个部分：安装和设置，以及对特定OpenSearch包装器的引用。
+
+## 安装和设置
+- 使用`pip install opensearch-py`安装Python包
+## 包装器
+
+### 向量存储
+
+存在一个围绕OpenSearch向量数据库的包装器，允许您将其用作向量存储
+用于语义搜索，使用由lucene、nmslib和faiss引擎提供的近似向量搜索
+或使用无痛脚本和脚本评分函数进行暴力向量搜索。
+
+要导入这个向量存储：
+```python
+from langchain_community.vectorstores import OpenSearchVectorSearch
+```
+
+有关 OpenSearch 包装器的更详细说明，请参见 [此笔记本](/docs/integrations/vectorstores/opensearch)

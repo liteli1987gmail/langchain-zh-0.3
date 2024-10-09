@@ -1,0 +1,82 @@
+# TruLens
+
+>[TruLens](https://trulens.org) 是一个 [开源](https://github.com/truera/trulens) 包，提供用于大型语言模型 (LLM) 基于应用的工具和评估工具。
+
+本页面介绍如何使用 [TruLens](https://trulens.org) 来评估和跟踪基于 LangChain 构建的 LLM 应用。
+
+
+## 安装和设置
+
+安装 `trulens-eval` python 包。
+
+```bash
+pip install trulens-eval
+```
+
+## 快速入门
+
+请查看[TruLens文档](https://www.trulens.org/trulens_eval/getting_started/quickstarts/langchain_quickstart/)中的集成细节。
+
+### 跟踪
+
+一旦您创建了LLM链，您可以使用TruLens进行评估和跟踪。
+TruLens有许多[开箱即用的反馈函数](https://www.trulens.org/trulens_eval/evaluation/feedback_functions/)，
+并且也是一个可扩展的LLM评估框架。
+
+创建反馈函数：
+
+```python
+from trulens_eval.feedback import Feedback, Huggingface, 
+
+# Initialize HuggingFace-based feedback function collection class:
+hugs = Huggingface()
+openai = OpenAI()
+
+# Define a language match feedback function using HuggingFace.
+lang_match = Feedback(hugs.language_match).on_input_output()
+# By default this will check language match on the main app input and main app
+# output.
+
+# Question/answer relevance between overall question and answer.
+qa_relevance = Feedback(openai.relevance).on_input_output()
+# By default this will evaluate feedback on main app input and main app output.
+
+# Toxicity of input
+toxicity = Feedback(openai.toxicity).on_input()
+```
+
+### 链
+
+在您为评估LLM设置了反馈函数后，您可以使用TruChain包装您的应用程序，以获得详细的跟踪、日志记录和LLM应用的评估。
+TruChain可以为您的LLM应用提供详细的跟踪、日志记录和评估。
+
+注意：查看创建 `chain` 的代码在
+ [TruLens 文档](https://www.trulens.org/trulens_eval/getting_started/quickstarts/langchain_quickstart/)。
+
+```python
+from trulens_eval import TruChain
+
+# wrap your chain with TruChain
+truchain = TruChain(
+    chain,
+    app_id='Chain1_ChatApplication',
+    feedbacks=[lang_match, qa_relevance, toxicity]
+)
+# Note: any `feedbacks` specified here will be evaluated and logged whenever the chain is used.
+truchain("que hora es?")
+```
+
+### 评估
+
+现在您可以探索基于 LLM 的应用程序！
+
+这样做将帮助您一目了然地了解您的 LLM 应用程序的表现。当您迭代新的 LLM 应用程序版本时，您可以比较它们在您设置的所有不同质量指标上的表现。您还将能够查看每条记录的评估，并探索每条记录的链元数据。
+
+```python
+from trulens_eval import Tru
+
+tru = Tru()
+tru.run_dashboard() # open a Streamlit app to explore
+```
+
+有关 TruLens 的更多信息，请访问 [trulens.org](https://www.trulens.org/)

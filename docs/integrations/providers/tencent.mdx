@@ -1,0 +1,95 @@
+# 腾讯
+
+>[腾讯控股有限公司 (维基百科)](https://en.wikipedia.org/wiki/Tencent) (中文: 腾讯; 拼音: Téngxùn)
+> 是一家总部位于
+> 深圳的中国跨国科技集团和控股公司。`腾讯`是全球收入最高的多媒体公司之一，
+> 根据收入计算。它也是全球视频游戏行业最大的公司，
+> 基于其股权投资。
+ 
+
+## 聊天模型
+
+>[腾讯的混合模型API](https://cloud.tencent.com/document/product/1729) (`Hunyuan API`)
+> 实现对话交流、内容生成、
+> 分析和理解，并可广泛应用于智能等各种场景
+> 客户服务，智能营销，角色扮演，广告，文案撰写，产品描述，
+> 脚本创作，简历生成，文章写作，代码生成，数据分析，以及内容
+> 分析。
+
+
+有关更多信息，请参见 [此笔记本](/docs/integrations/chat/tencent_hunyuan)
+
+```python
+from langchain_community.chat_models import ChatHunyuan
+```
+
+
+## 文档加载器
+
+### 腾讯云对象存储 (COS)
+
+> [腾讯云对象存储 (COS)](https://www.tencentcloud.com/products/cos) 是一个分布式
+> 存储服务，允许您通过 HTTP/HTTPS 协议从任何地方存储任意数量的数据。
+> `COS` 对数据结构或格式没有限制。它也没有桶大小限制和
+> 分区管理，使其适用于几乎任何用例，例如数据交付、
+> 数据处理和数据湖。COS 提供基于 Web 的控制台、多语言 SDK 和 API、
+> 命令行工具和图形工具。它与 Amazon S3 API 兼容，允许您快速
+> 访问社区工具和插件。
+
+安装 Python SDK：
+
+```bash
+pip install cos-python-sdk-v5
+```
+
+#### 腾讯COS目录
+
+有关更多信息，请参见[此笔记本](/docs/integrations/document_loaders/tencent_cos_directory)
+
+```python
+from langchain_community.document_loaders import TencentCOSDirectoryLoader
+from qcloud_cos import CosConfig
+```
+
+#### 腾讯COS文件
+
+有关更多信息，请参见[此笔记本](/docs/integrations/document_loaders/tencent_cos_file)
+
+```python
+from langchain_community.document_loaders import TencentCOSFileLoader
+from qcloud_cos import CosConfig
+```
+
+## 向量存储
+
+### 腾讯VectorDB
+
+>[腾讯云VectorDB](https://www.tencentcloud.com/products/vdb) 是一个完全托管的
+> 自主开发的企业级分布式数据库服务
+> 专注于存储、检索和分析多维向量数据。该数据库支持多种索引
+> 类型和相似性计算方法，单个索引支持10亿个向量，数百万QPS，和
+>毫秒查询延迟。`腾讯云向量数据库`不仅可以为大型
+>模型提供外部知识库并提高大型模型答案的准确性，还可以广泛应用于
+>推荐系统、自然语言处理服务、计算机视觉和智能客服等AI领域。
+
+安装Python SDK：
+
+```bash
+pip install tcvectordb
+```
+
+有关更多信息，请参见[此笔记本](/docs/integrations/vectorstores/tencentvectordb)
+
+```python
+from langchain_community.vectorstores import TencentVectorDB
+```
+
+## 聊天加载器
+
+### 微信
+
+> [微信](https://www.wechat.com/)或中文中的`微信`是由`腾讯`开发的中国
+>即时通讯、社交媒体和移动支付应用。
+
+查看[使用示例](/docs/integrations/chat_loaders/wechat)。
+

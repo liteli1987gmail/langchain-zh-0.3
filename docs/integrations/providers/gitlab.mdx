@@ -1,0 +1,31 @@
+# GitLab
+
+> [GitLab Inc.](https://about.gitlab.com/) 是一家开放核心公司
+> 运营 `GitLab`，一个可以开发、
+> 安全和操作软件的 DevOps 软件包。`GitLab` 包括基于 Git 的分布式版本
+> 控制，包含访问控制、错误跟踪、
+> 软件功能请求、任务管理和每个项目的维基等功能，
+> 以及代码片段。
+
+
+## 工具/工具包
+
+### GitLab工具包
+
+ `Gitlab` 工具包包含使 LLM 代理能够与 gitlab 仓库交互的工具。
+
+该工具包是 `python-gitlab` 库的封装。
+
+查看 [使用示例](/docs/integrations/tools/gitlab)。
+
+```python
+from langchain_community.agent_toolkits.gitlab.toolkit import GitLabToolkit
+```
+
+### GitLabAction
+
+与GitLab API交互的工具。
+
+```python
+from langchain_community.tools.github.tool import GitHubAction
+```

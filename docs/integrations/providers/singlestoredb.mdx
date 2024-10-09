@@ -1,0 +1,28 @@
+# SingleStoreDB
+
+>[SingleStoreDB](https://singlestore.com/) 是一个高性能的分布式 SQL 数据库，支持在 [云端](https://www.singlestore.com/cloud/) 和本地部署。它提供向量存储和向量函数，包括 [dot_product](https://docs.singlestore.com/managed-service/en/reference/sql-reference/vector-functions/dot_product.html) 和 [euclidean_distance](https://docs.singlestore.com/managed-service/en/reference/sql-reference/vector-functions/euclidean_distance.html)，从而支持需要文本相似性匹配的 AI 应用程序。
+
+## 安装和设置
+
+有几种方法可以建立与数据库的 [连接](https://singlestoredb-python.labs.singlestore.com/generated/singlestoredb.connect.html)。您可以设置环境变量或将命名参数传递给 `SingleStoreDB 构造函数`。
+或者，您可以将这些参数提供给 `from_documents` 和 `from_texts` 方法。
+
+```bash
+pip install singlestoredb
+```
+
+## 向量存储
+
+查看 [使用示例](/docs/integrations/vectorstores/singlestoredb)。
+
+```python
+from langchain_community.vectorstores import SingleStoreDB
+```
+
+## 内存
+
+查看 [使用示例](/docs/integrations/memory/singlestoredb_chat_message_history)。
+
+```python
+from langchain.memory import SingleStoreDBChatMessageHistory
+```

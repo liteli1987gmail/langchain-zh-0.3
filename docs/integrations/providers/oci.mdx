@@ -1,0 +1,51 @@
+# Oracle Cloud Infrastructure (OCI)
+
+与 [Oracle Cloud Infrastructure](https://www.oracle.com/artificial-intelligence/) 相关的 `LangChain` 集成。
+
+## OCI 生成式 AI
+> Oracle Cloud Infrastructure (OCI) [生成式 AI](https://docs.oracle.com/en-us/iaas/Content/generative-ai/home.htm) 是一项完全托管的服务，提供一系列最先进的
+> 可定制的大型语言模型 (LLMs)，涵盖广泛的用例，并通过单一 API 提供。
+> 使用 OCI 生成式 AI 服务，您可以访问现成的预训练模型，或根据自己的数据在专用 AI 集群上创建和托管自己的微调
+> 自定义模型。
+
+要使用此服务，您需要安装最新的 `oci` python SDK 和 langchain_community 包。
+
+```bash
+pip install -U oci langchain-community
+```
+
+请参见 [聊天](/docs/integrations/llms/oci_generative_ai)、[完成](/docs/integrations/chat/oci_generative_ai) 和 [嵌入](/docs/integrations/text_embedding/oci_generative_ai) 使用示例。
+
+```python
+from langchain_community.chat_models import ChatOCIGenAI
+
+from langchain_community.llms import OCIGenAI
+
+from langchain_community.embeddings import OCIGenAIEmbeddings
+```
+
+## OCI 数据科学模型部署端点
+
+> [OCI 数据科学](https://docs.oracle.com/en-us/iaas/data-science/using/home.htm) 是一个
+> 完全托管且无服务器的平台，适用于数据科学团队。使用 OCI 数据科学
+> 平台，您可以构建、训练和管理机器学习模型，然后将其部署为
+> OCI 模型部署端点，使用
+> [OCI 数据科学模型部署服务](https://docs.oracle.com/en-us/iaas/data-science/using/model-dep-about.htm)。
+
+如果您使用 VLLM 或 TGI 框架部署了 LLM，您可以使用
+`OCIModelDeploymentVLLM` 或 `OCIModelDeploymentTGI` 类与其交互。
+
+要使用，您应该安装最新的 `oracle-ads` python SDK。
+
+```bash
+pip install -U oracle-ads
+```
+
+请参阅[使用示例](/docs/integrations/llms/oci_model_deployment_endpoint)。
+
+```python
+from langchain_community.llms import OCIModelDeploymentVLLM
+
+from langchain_community.llms import OCIModelDeploymentTGI
+```
+
